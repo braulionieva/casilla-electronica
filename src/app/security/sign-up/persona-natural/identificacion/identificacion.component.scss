@@ -1,0 +1,280 @@
+@use 'responsive' as *;
+
+
+.identification__container {
+
+    .change-validator {
+        font-family: var(--mpfn-font-roboto-semi-bold);
+        color: #161616;
+        
+    }
+
+    .identification__instructions {
+        margin-bottom: 30px;
+        h4 {
+            font-family: var(--mpfn-font-semi-bold);
+            font-size: 1.15em;
+            margin-bottom: 15px;
+            color: var(--mpfn-blue-dark);
+        }
+        p {
+            font-family: var(--mpfn-font-roboto-regular);
+            font-size: 1em;
+            margin: 0 0 2px 0;
+            color: var(--mpfn-gray18);
+        }
+    }
+    .identification__content {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        .identification__content_left {
+            width: calc(100% - 500px);
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            .field {
+                width: 50.05%;
+                padding-right: 11px;
+                label {
+                    font-family: var(--mpfn-font-roboto-semi-bold);
+                    color: var(--mpfn-black);
+                }
+                input {
+                    width: 100%;
+                }
+                &.field_50 {
+                    width: 50%;
+                    &:nth-child(odd) {
+                        padding-right: 10px;
+                    }
+                    &:nth-child(even) {
+                        padding-left: 10px;
+                    }
+                }
+            }
+            .field_captcha {
+                width: 100%;
+            }
+            .options {
+                width: 100%;
+                display: flex;
+                margin-top: 40px;
+                button {
+                    display: flex;
+                    justify-content: center;
+                    min-width: 160px;
+                    font-family: var(--mpfn-font-semi-bold);
+                    height: 51px;
+                    &.ce-btn-gray {
+                        color: var(--mpfn-blue-dark);
+                    }
+                    &.ce-btn-primary {
+                        margin-left: 20px;
+                    }
+                }
+                i {
+                    margin-top: 4px;
+                    margin-right: 10px;
+                    font-weight: bold;
+                }
+            }
+            .fecha__emision {
+                width: 50%;
+                padding-left: 10px;
+                .help_information__item {
+                    display: none;
+                }
+                .field_50 {
+                    width: 100%;
+                }
+            }
+        }
+        .identification__content_right {
+            width: 500px;
+            margin-top: 30px;
+            .help_information {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                .help_information__item {
+                    width: 50%;
+                    padding: 15px;
+                    img {
+                        width: 100%;
+                        height: 150px;
+                    }
+                    .help_information__text {
+                        text-align: center;
+                        font-family: var(--mpfn-font-roboto-regular);
+                        color: var(--mpfn-gray18);
+                        font-size: 0.8em;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $medium-laptop) {
+    .identification__container {
+        .identification__content {
+            .identification__content_left {
+                width: calc(100% - 450px);
+            }
+            .identification__content_right {
+                width: 450px;
+                .help_information {
+                    .help_information__item {
+                        img {
+                            height: 124px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $tablet) {
+    .identification__container {
+        .identification__instructions {
+            h4 {
+                text-align: center;
+            }
+            p {
+                text-align: center;
+            }
+        }
+        .identification__content {
+            .identification__content_left {
+                width: calc(100% - 240px);
+                .field {
+                    width: 100%;
+                    padding-right: 0;
+                    input {
+                        width: 100%;
+                    }
+                    &.field_50 {
+                        width: 100%;
+                        &:nth-child(odd) {
+                            padding-right: 0;
+                        }
+                        &:nth-child(even) {
+                            padding-left: 0;
+                        }
+                    }
+                }
+                .options {
+                    justify-content: space-between;
+                    button {
+                        min-width: 47.5%;
+                    }
+                }
+                .fecha__emision {
+                    width: 100%;
+                    padding-left: 0;
+                }
+            }
+            .identification__content_right {
+                width: 240px;
+                .help_information {
+                    position: relative;
+                    top: -18px;
+                    .help_information__item {
+                        width: 100%;
+                        img {
+                            height: auto;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media(max-width: $large-mobile) {
+    .identification__container {
+        .identification__instructions {
+            h4 {
+                text-align: center;
+                font-size: 1em;
+            }
+            p {
+                text-align: center;
+                font-size: 0.9em;
+            }
+        }
+        .identification__content {
+            .identification__content_left {
+                width: 100%;
+                .fecha__emision {
+                    position: relative;
+                    padding-top: 15px;
+                    padding-bottom: 10px;
+                    margin-bottom: 40px;
+                    .field_50 {
+                        padding-top: 25px;
+                    }
+                    &:before {
+                        position: absolute;
+                        content: '';
+                        width: 100vw;
+                        height: 100%;
+                        left: -6vw;
+                        background-color: var(--mpfn-gray16);
+                        z-index: -200;
+                    }
+                    .help_information {
+                        display: flex;
+                        justify-content: center;
+                        width: 100%;
+                        flex-wrap: wrap;
+                        .help_information__item {
+                            width: 48%;
+                            padding: 10px;
+                            display: flex;
+                            justify-content: center;
+                            flex-wrap: wrap;
+                            img {
+                                width: 142px;
+                                height: 98px;
+                            }
+                            .help_information__text {
+                                text-align: center;
+                                font-family: var(--mpfn-font-roboto-regular);
+                                color: var(--mpfn-gray18);
+                                font-size: 0.7em;
+                            }
+                        }
+                    }
+                }
+                .field_captcha {
+                    display: flex;
+                    justify-content: center;
+                    margin-top: 10px;
+                }
+
+                .options {
+                    flex-wrap: wrap;
+                    button {
+                        min-width: 100%;
+                        &.ce-btn-primary {
+                            margin-left: 0;
+                        }
+                        &:first-child {
+                            order: 2;
+                            margin-top: 20px;
+                        }
+                        &:last-child {
+                            order: 1;
+                        }
+                    }
+                }
+            }
+            .identification__content_right {
+                display: none;
+            }
+        }
+    }
+}

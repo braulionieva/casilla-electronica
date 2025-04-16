@@ -1,0 +1,87 @@
+.casilla {
+    margin-top: 1rem;
+    //font-size: var(--font-size);
+
+    .p-password-input {
+        width: 100%;
+        //padding-top: 1rem;
+        //padding-bottom: 1rem;
+    }
+
+    &.wrapper {
+        padding-bottom: 3rem;
+    }
+
+    .form-login, .affiliation-box {
+        max-width: 470px;
+        margin: 0 auto;
+        padding: 10px;
+
+    }
+
+    
+
+    
+
+
+}
+
+.forgot-password-modal {
+    .p-dialog-header {
+        background-color: white;    
+        text-align: center;
+
+        .p-dialog-title {
+            color: #0E2E4Aff;
+            display: block;
+        }
+    }
+
+    .p-password-input {
+        width: 100%;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+    .p-password-panel {
+        font-size: 13px;
+    }
+
+    .rounded-icon-only {
+        width: 5.7rem;
+        height: 5.7rem;
+        
+        color: #fff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        border: 1px solid #08a47c;
+
+        .pi {
+            font-size: 4rem;
+            color: #08a47c;
+        }
+      }      
+
+}
+
+
+.card-afiliacion, .card-password-policy {
+    background-color: #E7EAED;
+
+    a {
+        color: var(--mpfn-black-2);
+        transition: all .2s;
+        background-color: #fff;
+
+        &:hover {
+            background-color: #dde1e5;
+        }
+    }
+}
+
+.scroll-color.p-scrollpanel {
+    .p-scrollpanel-bar.p-scrollpanel-bar-y {
+    background-color: #535252;
+    }
+}

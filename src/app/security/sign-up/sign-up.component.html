@@ -1,0 +1,503 @@
+<header>
+    <app-header></app-header>
+</header>
+<app-subheader title="Bienvenido a la Casilla Fiscal Electrónica" ></app-subheader>
+<div class="casilla-sign-up">
+    <div class="grid grid-nogutter">
+        <div
+            class="sign-up-title col md:col-12 lg:col-8 md:col-offset-0 lg:col-offset-2 md:text-1xl lg:text-2xl mt-4 text-center">
+            <p><strong>Solicitud de afiliación a la {{ appName }}</strong> - Persona Natural</p>
+        </div>
+    </div>
+    <div [formGroup]="signUpForm" class="grid grid-nogutter">
+        <div class="col">
+            <div class="steps">
+                <div class="steps-wrapper">
+                    <div class="steps-header">
+                        <div class="grid">
+                            <div class="col md:col-8 md:col-offset-2">
+                                <p-steps styleClass="no-print" [(activeIndex)]="activeIndex" [model]="steps"
+                                    [readonly]="true"></p-steps>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="steps-content">
+                        <div class="grid">
+                            <div class="col md:col-8 md:col-offset-2">
+                                <div [hidden]="activeIndex != 0" class="panel-1">
+                                    <div class="mb-3 mt-3">
+                                        <div><strong>Validación Por email</strong></div>
+                                        <span>Mensaje </span>
+                                    </div>
+                                    <div class="formgrid grid">
+                                        <div class="field col md:col-4 md:col-offset-4">
+                                            <label for="cellphone">Ingrese su correo electrónico</label>
+                                            <input formControlName="email"  pInputText
+                                                placeholder="Correo electrónico" type="text" class="w-full">
+                                            <div class="text-red-400 mt-2"
+                                                *ngIf="signUpForm.get('email')?.invalid && 
+                                                (signUpForm.get('email')?.dirty || signUpForm.get('email')?.touched)">Ingrese correo electrónico válido</div>
+                                        </div>
+                                    </div>
+                                    <div class="formgrid grid ">
+                                        <div class="field col md:col-4 md:col-offset-4">
+                                            <label for="captcha">Texto Captcha</label>
+                                            <div class="flex align-items-center flex-wrap gap-3 mb-3">
+                                                <img [src]="renderBase64(captcha$ | async)" alt="Casilla ELectrónica">
+                                                <a class="" (click)="refreshCaptcha($event)" href="#"><i
+                                                        [ngClass]="{'pi-spin': loadingCaptcha}" class="pi pi-sync"
+                                                        style="font-size: 1.2rem"></i></a>
+
+                                            </div>
+                                            <input formControlName="captcha" pInputText
+                                                placeholder="Captcha" type="text" class="w-full">
+                                            <div class="text-red-400 mt-2"
+                                                *ngIf="signUpForm.get('captcha')?.invalid && 
+                                                (signUpForm.get('captcha')?.dirty || signUpForm.get('captcha')?.touched)">Ingrese el código
+                                                Captcha</div>
+                                        </div>
+                                    </div>
+                                    <div class="formgrid grid">
+                                        <div class="field col md:col-4 md:col-offset-4 text-right">
+                                            <button (click)="sendMessage()" [disabled]="!isValid4Captcha || sendingCode"
+                                                pButton pRipple class="p-button-success">
+                                                <i [ngClass]="{'pi-spin pi-sync': sendingCode, 'pi-envelope': !sendingCode}"
+                                                    class="pi mr-2"></i>
+                                                {{ sendingCode? 'Enviando...': 'Enviar Correo' }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="formgrid grid">
+                                        <div class="field col md:col-4 md:col-offset-4">
+                                            <label for="smsCode">Ingresar Código </label>
+                                            <input formControlName="smsCode" pInputText placeholder="Código"
+                                                type="text" class="w-full">
+                                            <div class="text-red-400 mt-2"
+                                                *ngIf="signUpForm.get('smsCode')?.invalid && 
+                                                (signUpForm.get('smsCode')?.dirty || signUpForm.get('smsCode')?.touched)">Ingrese el código
+                                                enviado</div>
+                                        </div>
+                                    </div>
+                                    <div class="formgrid grid mt-2">
+                                        <div class="field col md:col-6 md:col-offset-3 text-right">
+                                            <button (click)="personalInfo()"
+                                                [disabled]="!isValid4Sms || validatingSmsCode" pButton pRipple
+                                                class="p-button-secondary px-5">
+                                                <i [ngClass]="{'pi pi-spin pi-sync': validatingSmsCode, 'fa-solid fa-angles-right fa-lg': !validatingSmsCode}"
+                                                    class="mr-2"></i>
+                                                {{ validatingSmsCode? 'Validando...': 'Continuar' }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div [hidden]="activeIndex != 1" class="panel-2">
+                                    <div class="mb-3 mt-3">
+                                        <div><strong>Completar datos</strong></div>
+                                        <div>Debe tener a la mano su DNI</div>
+                                        <span>Por favor, ingrese los siguientes datos para verificar su identidad</span>
+                                    </div>
+                                    <div class="grid">
+                                        <div class="col md:col-6">
+                                            <div class="grid">
+                                                <div class="col">
+                                                    <h5>Verificar datos</h5>
+                                                </div>
+                                            </div>
+                                            <div class="formgrid grid">
+                                                <div class="field col md:col-8">
+                                                    <label for="idType">Documento</label>
+                                                    <div class="flex ">
+                                                        <div class="md:flex flex-column flex-shrink-1">
+                                                            <p-dropdown formControlName="idType"
+                                                                placeholder="Tipo documento"
+                                                                [options]="(idTypes$ | async)??[]"
+                                                                optionLabel="description"
+                                                                optionValue="tipoDoc"></p-dropdown>
+                                                            <div class="text-red-400 mt-2"
+                                                                *ngIf="signUpForm.get('idType')?.invalid && 
+                                                (signUpForm.get('idType')?.dirty || signUpForm.get('idType')?.touched)">Seleccione el tipo de
+                                                                documento</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 md:col-8">
+                                                    <div class="flex-grow-0 flex-column md:flex-grow-1 flex">
+                                                        <input formControlName="idNumber" maxlength="8" minlength="8"
+                                                            pKeyFilter="int" pInputText id="dni" placeholder="Documento"
+                                                            type="text" class="w-full">
+                                                        <div class="text-red-400 mt-2"
+                                                            *ngIf="signUpForm.get('idNumber')?.invalid && 
+                                                (signUpForm.get('idNumber')?.dirty || signUpForm.get('idNumber')?.touched)">Ingrese un nro de DNI
+                                                            válido</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="formgrid grid mt-2">
+                                                <div class="field col md:col-8">
+                                                    <label for="no_doc">Fecha de emisión del documento</label>
+                                                    <p-calendar [readonlyInput]="true" formControlName="dueDate"
+                                                        styleClass="w-full"></p-calendar>
+                                                    <div class="text-red-400 mt-2"
+                                                        *ngIf="signUpForm.get('dueDate')?.invalid && 
+                                                (signUpForm.get('dueDate')?.dirty || signUpForm.get('dueDate')?.touched)">Ingrese la fecha de
+                                                        emisión del documento</div>
+                                                </div>
+                                            </div>
+                                            <div class="formgrid grid">
+                                                <div class="field col md:col-8 text-right">
+                                                    <button (click)="checkDni()"
+                                                        [disabled]="!isValid4Id || validatingDni" pButton pRipple
+                                                        class="p-button-success">
+                                                        <i [ngClass]="{'pi pi-spin pi-sync': validatingDni, 'fa-solid fa-check fa-lg': !validatingDni}"
+                                                            class="mr-2"></i>
+                                                        {{ validatingDni? 'Validando DNI...': 'Validar DNI'}}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="hidden col md:block md:col-6">
+                                            <div class="grid ">
+                                                <div class="col-6">
+                                                    <div
+                                                        class="align-self-center flex align-items-center justify-content-center">
+                                                        <div>
+                                                            <img style="width: 100%;"
+                                                                src="assets/images/dni_electronico.png"
+                                                                alt="DNI electrónico">
+                                                            <div class="text-center">Fecha de emisión DNI electrónico
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div
+                                                        class="align-self-center flex align-items-center justify-content-center">
+                                                        <div>
+                                                            <img style="width: 100%;"
+                                                                src="assets/images/dni_azul.png"
+                                                                alt="DNI azul">
+                                                            <div class="text-center mt-3">Fecha de emisión DNI azul
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="formgrid grid">
+                                                <div class="field col-12 md:col-4">
+                                                    <label for="nombres">Nombre</label>
+                                                    <input formControlName="nombres" readonly pInputText
+                                                        placeholder="Nombre" type="text" class="w-full">
+                                                    <div class="text-red-400 mt-2"
+                                                        *ngIf="signUpForm.get('nombres')?.invalid && 
+                                                (signUpForm.get('nombres')?.dirty || signUpForm.get('nombres')?.touched)">Ingrese su nombre</div>
+                                                </div>
+                                                <div class="field col-12 md:col-4">
+                                                    <label for="apellidoPaterno">Primer Apellido</label>
+                                                    <input readonly formControlName="apellidoPaterno" pInputText
+                                                        placeholder="Primer Apellido" type="text" class="w-full ">
+                                                    <div class="text-red-400 mt-2"
+                                                        *ngIf="signUpForm.get('apellidoPaterno')?.invalid && 
+                                                (signUpForm.get('apellidoPaterno')?.dirty || signUpForm.get('apellidoPaterno')?.touched)">Ingrese
+                                                        su apellido paterno</div>
+                                                </div>
+                                                <div class="field col-12 md:col-4">
+                                                    <label for="apellidoMaterno">Segundo Apellido</label>
+                                                    <input readonly formControlName="apellidoMaterno" pInputText
+                                                        placeholder="Segundo Apellido" type="text" class="w-full">
+                                                    <div class="text-red-400 mt-2"
+                                                        *ngIf="signUpForm.get('apellidoMaterno')?.invalid && 
+                                                (signUpForm.get('apellidoMaterno')?.dirty || signUpForm.get('apellidoMaterno')?.touched)">Ingrese
+                                                        su apellido materno</div>
+                                                </div>
+                                            </div>
+                                            <div class="formgrid grid">
+                                                <div class="col">
+                                                    <h5>Datos de Contacto</h5>
+                                                </div>
+                                            </div>
+                                            <div class="formgrid grid">
+                                                <div class="field col-12 md:col-4">
+                                                    <label for="email">Correo electrónico</label>
+                                                    <input formControlName="email" pInputText placeholder="email"
+                                                        type="text" class="w-full 3">
+                                                    <div class="text-red-400 mt-2" *ngIf="signUpForm.get('email')?.invalid && 
+                                                (signUpForm.get('email')?.dirty || signUpForm.get('email')?.touched)">
+                                                        Ingrese un correo electrónico válido</div>
+                                                </div>
+                                                <div class="field col-12 md:col-4">
+                                                    <label for="emailConfirm">Confirmación de correo</label>
+                                                    <input formControlName="emailConfirm" pInputText
+                                                        placeholder="Confirmación email" type="text" class="w-full">
+                                                    <div class="text-red-400 mt-2"
+                                                        *ngIf="signUpForm.get('emailConfirm')?.errors?.['required'] && 
+                                                (signUpForm.get('emailConfirm')?.dirty || signUpForm.get('emailConfirm')?.touched)">Confirme su
+                                                        correo electrónico</div>
+                                                    <div class="text-red-400 mt-2"
+                                                        *ngIf="signUpForm.get('emailConfirm')?.errors?.['matchValidator'] && 
+                                                (signUpForm.get('emailConfirm')?.dirty || signUpForm.get('emailConfirm')?.touched)">Los correos no
+                                                        coinciden</div>
+                                                </div>
+                                                <div class="field col-12 md:col-4">
+                                                    <label for="sex">Sexo</label>
+                                                    <div>
+                                                        <p-dropdown (onChange)="onChangeGender($event)" formControlName="gender" placeholder="Seleccione"
+                                                            styleClass="w-full"
+                                                            [options]="[{ name: 'Másculino', code: 'M' }, {name: 'Femenino', code: 'F'}]"
+                                                            optionLabel="name"></p-dropdown>
+                                                        <div class="text-red-400 mt-2"
+                                                            *ngIf="signUpForm.get('gender')?.invalid && 
+                                                (signUpForm.get('gender')?.dirty || signUpForm.get('gender')?.touched)">Seleccione su género</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="formgrid grid">
+                                                <div class="field col-12 md:col-4">
+                                                    <label for="cellphone1">Número de Celular</label>
+                                                    <input maxlength="9" formControlName="cellphone" pKeyFilter="int"
+                                                        pInputText placeholder="Celular" type="text" class="w-full">
+                                                    <div class="text-red-400 mt-2"
+                                                        *ngIf="signUpForm.get('cellphone')?.invalid && 
+                                                (signUpForm.get('cellphone')?.dirty || signUpForm.get('cellphone')?.touched)">Ingrese un celular
+                                                        válido</div>
+                                                </div>
+                                            </div>
+                                            <div class="formgrid grid">
+                                                <div class="col">
+                                                    <h5>Dirección domiciliaria</h5>
+                                                </div>
+                                            </div>
+                                            <div class="formgrid grid">
+                                                <div class="field col-12 md:col-4">
+                                                    <label for="departamento">Departamento</label>
+                                                    <div>
+                                                        <p-dropdown (onChange)="loadProvs($event)"
+                                                            formControlName="departamento" placeholder="Seleccione"
+                                                            styleClass="w-full" [options]="(departamento$ | async)??[]"
+                                                            optionLabel="name">
+                                                            <ng-template pTemplate="empty">
+                                                                <div class="flex align-items-center gap-2"
+                                                                    *ngIf="loadingDepartamento">
+                                                                    <i class="fa-solid fa-spinner fa-spin"></i>
+                                                                    <div>Cargando datos</div>
+                                                                </div>
+                                                            </ng-template>
+                                                        </p-dropdown>
+                                                        <div class="text-red-400 mt-2"
+                                                            *ngIf="signUpForm.get('departamento')?.invalid && 
+                                                (signUpForm.get('departamento')?.dirty || signUpForm.get('departamento')?.touched)">Seleccione su
+                                                            departamento</div>
+                                                    </div>
+                                                </div>
+                                                <div class="field col-12 md:col-4">
+                                                    <label for="provincia">Provincia</label>
+                                                    <div>
+                                                        <p-dropdown (onChange)="loadDist($event)" formControlName="provincia"
+                                                            placeholder="Seleccione" styleClass=" w-full"
+                                                            [options]="(provincia$ | async)??[]" optionLabel="name"
+                                                            >
+                                                            <ng-template pTemplate="empty">
+                                                                <div class="flex align-items-center gap-2"
+                                                                    *ngIf="loadingProvincia; else emptyP">
+                                                                    <i class="fa-solid fa-spinner fa-spin"></i>
+                                                                    <div>Cargando datos</div>
+                                                                </div>
+                                                                <ng-template #emptyP>
+                                                                    Seleccionar Departamento
+                                                                </ng-template>
+                                                            </ng-template>
+                                                        </p-dropdown>
+                                                        <div class="text-red-400 mt-2"
+                                                            *ngIf="signUpForm.get('provincia')?.invalid && 
+                                                (signUpForm.get('provincia')?.dirty || signUpForm.get('provincia')?.touched)">Seleccione su
+                                                            provincia</div>
+                                                    </div>
+                                                </div>
+                                                <div class="field col-12 md:col-4">
+                                                    <label for="distrito">Distrito</label>
+                                                    <div>
+                                                        <p-dropdown (onChange)="onChangeDistrict($event)" formControlName="distrito" placeholder="Seleccione"
+                                                            styleClass="w-full" [options]="(distrito$ | async)??[]"
+                                                            optionLabel="name">
+                                                            <ng-template pTemplate="empty">
+                                                                <div class="flex align-items-center gap-2"
+                                                                    *ngIf="loadingDistrito; else emptyP">
+                                                                    <i class="fa-solid fa-spinner fa-spin"></i>
+                                                                    <div>Cargando datos</div>
+                                                                </div>
+                                                                <ng-template #emptyP>
+                                                                    Seleccionar Provincia
+                                                                </ng-template>
+                                                            </ng-template>
+                                                        </p-dropdown>
+                                                        <div class="text-red-400 mt-2"
+                                                            *ngIf="signUpForm.get('distrito')?.invalid && 
+                                                (signUpForm.get('distrito')?.dirty || signUpForm.get('distrito')?.touched)">Seleccione su distrito
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="formgrid grid">
+                                                <div class="field col">
+                                                    <label for="direccion">Dirección</label>
+                                                    <input pInputText formControlName="direccion"
+                                                        placeholder="Dirección" type="text" class="w-full">
+                                                    <div class="text-red-400 mt-2"
+                                                        *ngIf="signUpForm.get('direccion')?.invalid && 
+                                                (signUpForm.get('direccion')?.dirty || signUpForm.get('direccion')?.touched)">Ingrese la dirección
+                                                        domiciliaria</div>
+                                                </div>
+                                            </div>
+                                            <div class="formgrid grid mt-4">
+                                                <div class="field col text-left">
+                                                    <button icon="fa-solid fa-angles-left " (click)="sms()" pButton
+                                                        pRipple label="Atrás" class="p-button-info px-5"></button>
+                                                </div>
+                                                <div class="field col text-right">
+                                                    <button [disabled]="!signUpForm.valid || saving"
+                                                        (click)="review()" pButton
+                                                        pRipple class="p-button-secondary px-5">
+                                                        <i [ngClass]="{'pi pi-spin pi-sync': saving, 'fa-solid fa-angles-right': !saving}"
+                                                            class="mr-2"></i>
+                                                            {{ saving? 'Procesando datos...': 'Afiliar'}}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div [hidden]="activeIndex != 2" class="panel-3">
+                                    <div class="mb-3 text-center">
+                                        <strong>Resumen de la afiliación online en la {{ appName }}</strong>
+                                    </div>
+                                    <div class="grid">
+                                        <div class="col">
+                                            <p-card>
+                                                <div class="grid">
+                                                    <div class="col-12 text-center">
+                                                        <img class="w-3" src="assets/images/image-902.png"
+                                                            alt="" srcset="">
+                                                    </div>
+                                                    <div class="col-12 text-center mb-2">
+                                                        <div class="title-review-affiliation">Ministerio Público -
+                                                            {{ appName }}</div>
+                                                        <div class="text-center"><strong>Afiliación Online - Persona
+                                                                Natural</strong></div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="grid uppercase">
+                                                    <div
+                                                        class="col-5 lg:col-3 md:col-4 lg:col-offset-2 md:col-offset-0">
+                                                        usuario
+                                                    </div>
+                                                    <div class="col-7">{{ signUpForm.get('idNumber')?.value }}</div>
+                                                </div>
+                                                <div class="grid uppercase">
+                                                    <div
+                                                        class="col-5 lg:col-3 md:col-4 lg:col-offset-2 md:col-offset-0">
+                                                        Nombre
+                                                    </div>
+                                                    <div class="col-7">{{ signUpForm.get('nombres')?.value }}</div>
+                                                </div>
+                                                <div class="grid uppercase">
+                                                    <div
+                                                        class="col-5 lg:col-3 md:col-4 lg:col-offset-2 md:col-offset-0">
+                                                        Apellidos
+                                                    </div>
+                                                    <div class="col-7">{{ signUpForm.get('apellidoPaterno')?.value }}
+                                                        {{ signUpForm.get('apellidoMaterno')?.value }}
+                                                    </div>
+                                                </div>
+                                                <div class="grid uppercase">
+                                                    <div
+                                                        class="col-5 lg:col-3 md:col-4 lg:col-offset-2 md:col-offset-0">
+                                                        Tipo documento
+                                                    </div>
+                                                    <div class="col-7">DNI: {{ signUpForm.get('idNumber')?.value }}
+                                                    </div>
+                                                </div>
+                                                <div class="grid uppercase">
+                                                    <div
+                                                        class="col-5 lg:col-3 md:col-4 lg:col-offset-2 md:col-offset-0">
+                                                        Correo
+                                                    </div>
+                                                    <div class="col-7">{{ signUpForm.get('email')?.value }}</div>
+                                                </div>
+                                                <div class="grid uppercase">
+                                                    <div
+                                                        class="col-5 lg:col-3 md:col-4 lg:col-offset-2 md:col-offset-0">
+                                                        Celular
+                                                    </div>
+                                                    <div class="col-7">{{ signUpForm.get('cellphone')?.value }}</div>
+                                                </div>
+                                                <div class="grid uppercase">
+                                                    <div
+                                                        class="col-5 lg:col-3 md:col-4 lg:col-offset-2 md:col-offset-0">
+                                                        Sexo
+                                                    </div>
+                                                    <div class="col-7">{{ selectedGender }}</div>
+                                                </div>
+                                                <div class="grid uppercase">
+                                                    <div
+                                                        class="col-5 lg:col-3 md:col-4 lg:col-offset-2 md:col-offset-0">
+                                                        ubigeo
+                                                    </div>
+                                                    <div class="col-7">{{ selectedDepartamento }}
+                                                        - {{selectedProvincia}}
+                                                        - {{ selectedDistrito }}
+                                                    </div>
+                                                </div>
+                                                <div class="grid uppercase">
+                                                    <div
+                                                        class="col-5 lg:col-3 md:col-4 lg:col-offset-2 md:col-offset-0">
+                                                        Domicilio
+                                                    </div>
+                                                    <div class="col-7">{{ signUpForm.get('direccion')?.value }}</div>
+                                                </div>
+                                                <div class="grid uppercase">
+                                                    <div
+                                                        class="col-5 lg:col-3 md:col-4 lg:col-offset-2 md:col-offset-0">
+                                                        Fecha de afiliación
+                                                    </div>
+                                                    <div class="col-7">{{ dd | date:'dd/MM/yyyy, hh:mm a' }}</div>
+                                                </div>
+                                                <div class="grid uppercase">
+                                                    <div
+                                                        class="col-5 lg:col-3 md:col-4 lg:col-offset-2 md:col-offset-0">
+                                                        Url Casilla Fiscal Electrónica
+                                                    </div>
+                                                    <div class="col-7">{{ casillaUrl }}</div>
+                                                </div>
+                                                <div class="grid mt-6 no-print">
+                                                    <div class="col-9  text-right">
+                                                        <button icon="pi pi-print" (click)="print()" pButton pRipple
+                                                            label="Imprimir" class="btn-security"></button>
+                                                    </div>
+                                                </div>
+                                            </p-card>
+                                        </div>
+                                    </div>
+                                    <div class="grid mt-4 no-print">
+                                        <div class="field col text-right">
+                                            <button (click)="home()" icon="pi pi-home" pButton pRipple label="Ir a Inicio"
+                                                class="p-button-secondary py-3 px-5"></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>
+<p-toast>
+    <ng-template let-message pTemplate="message">
+        <app-custom-toast style="flex: 1 1 auto;" [message]="message"></app-custom-toast>
+    </ng-template>
+</p-toast>

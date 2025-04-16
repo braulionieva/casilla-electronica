@@ -1,0 +1,260 @@
+@use 'responsive' as *;
+
+.tooltip_login {
+    width: 250px;
+    position: absolute;
+    font-family: var(--mpfn-font-roboto-regular);
+    background-color: var(--mpfn-gray16);
+    padding: 3px 10px 10px 10px ;
+    font-size: 14px;
+    top: -18%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-color: var(--mpfn-gray17);
+
+
+    &::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -20px;
+        transform: translateX(-50%);
+        border-top: 10px solid var(--mpfn-gray16);
+        border-bottom: 10px solid transparent;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+    }
+
+
+
+
+}
+
+.sign_in__container {
+    width: 100%;
+
+    .sign_in_content {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 auto;
+        width: $width-content;
+
+        .sign_in__content_left {
+            width: 50%;
+
+            .sign_in__form {
+                padding: 80px 100px;
+
+                .sign_in__form_header {
+                    margin-bottom: 45px;
+
+                    h3 {
+                        font-family: var(--mpfn-font-semi-bold);
+                        font-size: 1.5em;
+                        margin-bottom: 8px;
+                    }
+
+                    p {
+                        font-family: var(--mpfn-font-roboto-regular);
+                        font-size: 1em;
+                    }
+                }
+
+                .sign_in__form_content {
+                    display: flex;
+                    justify-content: flex-end;
+                    flex-wrap: wrap;
+
+                    .field {
+                        width: 100%;
+                        margin-bottom: 1.5em;
+
+                        label {
+                            font-family: var(--mpfn-font-roboto-semi-bold);
+                            width: 100%;
+                        }
+
+                        input {
+                            width: 100%;
+                        }
+
+                        p-password {
+                            width: 100% !important;
+                            display: inline-block !important;
+                        }
+                    }
+
+                    button {
+                        font-family: var(--mpfn-font-semi-bold);
+                    }
+
+                    .forgot_password {
+                        color: var(--mpfn-lightblue);
+                        cursor: pointer;
+                        display: inline-block;
+                        font-family: var(--mpfn-font-roboto-semi-bold);
+                        opacity: 1;
+                        transition: 300ms opacity ease;
+                        font-size: 1.05em;
+                        margin-top: 20px;
+                        position: relative;
+
+                        &:hover {
+                            opacity: 0.7;
+                        }
+                    }
+                }
+            }
+        }
+
+        .sign_in__content_right {
+            width: 50%;
+        }
+    }
+}
+
+
+@media (max-width: $medium-laptop) {
+    .sign_in__container {
+        .sign_in_content {
+            width: $width-content-laptop;
+
+            .sign_in__content_left {
+                .sign_in__form {
+                    padding: 80px 60px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $tablet) {
+    .sign_in__container {
+        .sign_in_content {
+            .sign_in__content_left {
+                width: 100%;
+
+                .sign_in__form {
+                    width: 580px;
+                    margin: 0 auto;
+                    padding: 60px 30px 30px 30px;
+
+                    .sign_in__form_header {
+                        h3 {
+                            text-align: center;
+                        }
+
+                        p {
+                            text-align: center;
+                        }
+                    }
+
+                    .sign_in__form_content {
+                        justify-content: center;
+                        .verification_code {
+                            label {
+                                text-align: center;
+                            }
+                            .otp_verification_code {
+                                justify-content: center;
+                            }
+                        }
+                        .field {
+                            &.field-captcha {
+                                display: flex;
+                                justify-content: center;
+                            }
+                        }
+
+                        .forgot_password {
+                            text-align: center;
+                        }
+
+                        .countdown {
+                            text-align: center;
+                        }
+                        
+                        .options-2fa {
+                            display: flex;
+                            flex-wrap: wrap;
+                            button {
+                                width: 100%;
+                                display: flex;
+                                justify-content: center;
+                                &:first-child {
+                                    order: 2;
+                                    margin-top: 10px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .sign_in__content_right {
+                width: 100%;
+            }
+        }
+    }
+}
+
+@media (max-width: $large-mobile) {
+    .sign_in__container {
+        .sign_in_content {
+            .sign_in__content_left {
+                width: 100%;
+
+                .sign_in__form {
+                    width: 100%;
+                    padding: 70px 0 30px 0;
+
+                    .sign_in__form_header {
+                        margin-bottom: 45px;
+
+                        h3 {
+                            font-size: 1.25em;
+                        }
+
+                        p {
+                            font-size: 0.95em;
+                        }
+                    }
+
+                    .sign_in__form_content {
+                        button {
+                            font-family: var(--mpfn-font-semi-bold);
+                            font-size: 1em;
+                        }
+
+                        .forgot_password {
+                            font-size: 0.9em;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+:host::ng-deep app-subheader {
+    .subheader__container {
+        padding: 6px 0 50px 0;
+    }
+}
+
+.resend_code {
+    width: 100%;
+    margin-top: 0px !important;
+    text-align: left;
+}
+
+.options-2fa {
+    margin-top: 60px;
+}
+
+.countdown {
+    width: 100%;
+    color: #3F9FD6;
+}

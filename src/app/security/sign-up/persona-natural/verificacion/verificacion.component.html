@@ -1,0 +1,145 @@
+<div class="verification__container">
+    <div class="verification__instructions">
+        <h4>Verificación de datos</h4>
+        <p>Para crear una cuenta primero debemos verificar su correo electrónico.</p>
+    </div>
+    <div class="verification__content">
+        <div class="verification__content_left" [formGroup]="form">
+            <div class="field field__width_icon">
+                <label for="Celular">Celular</label>
+                <input
+                    (input)="soloNumeros($event, 'celular')"
+                    placeholder="Ingrese su celular"
+                    formControlName="celular"
+                    pInputText
+                    type="text"
+                    [maxlength]="9"
+                    [minlength]="9"
+                >
+                <img [src]="mobileIcon" alt="Celular">
+                <span class="characters_count">{{ mobileCharactersCount }}/9</span>
+            </div>
+            <div class="field field__width_icon">
+                <label for="Correo electrónico">Correo electrónico</label>
+                <input
+                    placeholder="ejemplo@gmail.com"
+                    formControlName="correo"
+                    pInputText
+                    type="text"
+                >
+                <img [src]="mailIcon" alt="Correo electrónico">
+                <div class="send_code">
+                    <button
+                        [disabled]="disabledButton"
+                        (click)="enviarCodigo()"
+                        class="ce-btn-primary"
+                        pButton
+                    >Enviar código</button>
+                </div>
+            </div>
+            <div class="field_captcha">
+                <re-captcha
+                  #captchaRef
+                    (errored)="errored($event)"
+                    (resolved)="resolved($event)"
+                    [siteKey]="siteKey"
+                ></re-captcha>
+            </div>
+            <div class="field">
+                <label for="Confirmar código de verificación">Confirmar código de verificación</label>
+                <input
+                    [maxlength]="6"
+                    [minlength]="6"
+                    (input)="soloNumeros($event, 'codigoVerificacion')"
+                    placeholder="Ingrese el código enviado a su correo"
+                    formControlName="codigoVerificacion"
+                    pInputText
+                    type="text"
+                >
+            </div>
+            <div class="options">
+                <button
+                    pButton
+                    (click)="cancelar()"
+                    class="ce-btn-gray"
+                    pButton
+                >
+                    <i class="pi pi-arrow-left"></i>
+                    Regresar
+                </button>
+                <button
+                    [disabled]="!form.valid"
+                    (click)="verificarDatos()"
+                    pButton
+                    class="ce-btn-primary"
+                    pButton
+                >Continuar</button>
+            </div>
+        </div>
+        <div class="verification__content_right">
+        </div>
+    </div>
+</div>
+
+
+<!-- <div class="mt-6">
+    <div class="font-bold text-lg">Verificación de datos</div>
+    <div>Para crear una cuenta primero debemos verificar su correo electrónico.</div>
+</div>
+<div [formGroup]="form" class="mt-6">
+
+    <div class="formgrid grid">
+
+        <div class="field col-5">
+            <label for="" class="font-medium">Celular</label>
+            <input (input)="soloNumeros($event, 'celular')"
+            placeholder="Ingrese su celular"
+            formControlName="celular" pInputText type="text"
+            maxlength="9" minlength="9"
+            class="w-full">
+        </div>
+    </div>
+    <div class="formgrid grid">
+        <div class="field col-5">
+            <re-captcha (errored)="errored($event)" (resolved)="resolved($event)"
+                        [siteKey]="siteKey"></re-captcha>
+        </div>
+    </div>
+    <div class="formgrid grid">
+        <div class="field col-5">
+            <label for="" class="font-medium">Correo electrónico</label>
+            <input placeholder="ejemplo@gmail.com" formControlName="correo" pInputText type="text" class="w-full">
+        </div>
+        <div class="field col-5">
+            <label for="" class="font-medium">&nbsp;</label>
+            <div>
+                <button [disabled]="disabledButton" (click)="enviarCodigo()" pButton class="ce-btn-primary font-bold"
+                pButton>Enviar código</button>
+            </div>
+
+        </div>
+    </div>
+    <div class="formgrid grid">
+        <div class="field col-5">
+            <label for="" class="font-medium">Confirmar código de verificación</label>
+            <input maxlength="6" minlength="6" (input)="soloNumeros($event, 'codigoVerificacion')"  placeholder="Ingrese el código enviado a su correo" formControlName="codigoVerificacion" pInputText type="text"
+                class="w-full">
+        </div>
+    </div>
+    <div class="formgrid grid">
+        <div class="field col-5">
+            <div class="mb-3 mt-5 flex justify-content-between flex-wrap">
+                <button pButton (click)="cancelar()" class="ce-btn-gray font-bold" pButton>Regresar</button>
+                <button [disabled]="!form.valid" (click)="verificarDatos()" pButton class="ce-btn-primary font-bold"
+                    pButton>Continuar</button>
+            </div>
+        </div>
+    </div>
+
+</div> -->
+
+<p-toast>
+    <ng-template let-message pTemplate="message">
+        <app-custom-toast style="flex: 1 1 auto;" [message]="message"></app-custom-toast>
+    </ng-template>
+</p-toast>

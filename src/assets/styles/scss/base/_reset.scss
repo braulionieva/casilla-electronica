@@ -1,0 +1,86 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  //height: 100%;
+  //font-size: $scale;
+}
+
+@font-face {
+  font-family: "Poppins-Black";
+  src: url("../../../fonts/Poppins-Black.ttf");
+}
+
+@font-face {
+  font-family: "Poppins-Bold";
+  src: url("../../../fonts/Poppins-Bold.ttf");
+}
+
+@font-face {
+  font-family: "Poppins-SemiBold";
+  src: url("../../../fonts/Poppins-SemiBold.ttf");
+}
+
+@font-face {
+  font-family: "Poppins-Medium";
+  src: url("../../../fonts/Poppins-Medium.ttf");
+}
+
+@font-face {
+  font-family: "Poppins-Regular";
+  src: url("../../../fonts/Poppins-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Poppins-Light";
+  src: url("../../../fonts/Poppins-Light.ttf");
+}
+
+@font-face {
+  font-family: "Poppins-Thin";
+  src: url("../../../fonts/Poppins-Thin.ttf");
+}
+
+@font-face {
+  font-family: "Roboto-Bold";
+  src: url("../../../fonts/Roboto-Bold.ttf");
+}
+
+@font-face {
+  font-family: "Roboto-SemiBold";
+  src: url("../../../fonts/Roboto-SemiBold.ttf");
+}
+
+@font-face {
+  font-family: "Roboto-Regular";
+  src: url("../../../fonts/Roboto-Regular.ttf");
+}
+
+body {
+  font-family: var(--font-family);
+  color: var(--text-color);
+  background-color: var(--background-color);
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+.p-inputtext:enabled:focus {
+  box-shadow: none !important;
+}
+
+.p-dialog .p-dialog-header .p-dialog-header-icon:focus {
+  box-shadow: none
+}
+
+.p-dropdown:not(.p-disabled).p-focus {
+  box-shadow: none
+}

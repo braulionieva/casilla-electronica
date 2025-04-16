@@ -1,0 +1,31 @@
+<app-header></app-header>
+
+<app-regresar
+  redirecTo="/"
+  text="Volver a la página principal"
+></app-regresar>
+
+<div class="sign_up__container">
+  <div class="sign_up__content">
+    <div class="sign_up__header">
+      <h3>Afiliación a la {{ appName }}</h3>
+      <p>Persona natural</p>
+    </div>
+    <div class="sign_up__steps">
+      <p-steps
+        class="cfe-steps"
+        [model]="steps"
+        [activeIndex]="activeIndex"
+        [readonly]="true"
+        [styleClass]="'p-steps-completed-'+activeIndex"
+      ></p-steps>
+    </div>
+    <main>
+      <app-identificacion [actualizarCaptcha]="actualizarCaptcha" (alVerificar)="alVerificar($event)" *ngIf="activeIndex === 0"></app-identificacion>
+      <app-verificacion (alAfiliar)="afiliar($event)" (changeStep)="changeStep($event)"
+                        *ngIf="activeIndex === 1"></app-verificacion>
+      <app-confirmacion *ngIf="activeIndex===2"></app-confirmacion>
+    </main>
+  </div>
+</div>
+

@@ -1,0 +1,218 @@
+@use 'responsive' as *;
+
+.verification__container {
+    .verification__instructions {
+        margin-bottom: 30px;
+        h4 {
+            font-family: var(--mpfn-font-semi-bold);
+            font-size: 1.15em;
+            margin-bottom: 15px;
+            color: var(--mpfn-blue-dark);
+        }
+        p {
+            font-family: var(--mpfn-font-roboto-regular);
+            font-size: 1em;
+            margin: 0 0 2px 0;
+            color: var(--mpfn-gray18);
+        }
+    }
+    .verification__content {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        .verification__content_left {
+            width: 450px;
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            .field {
+                width: 100%;
+                padding-right: 11px;
+                label {
+                    font-family: var(--mpfn-font-roboto-semi-bold);
+                    color: var(--mpfn-black);
+                }
+                input {
+                    width: 100%;
+                }
+                &.field__width_icon {
+                    position: relative;
+                    input {
+                        padding-left: 50px;
+                    }
+                    img {
+                        position: absolute;
+                        left: 18px;
+                        bottom: 15px;
+                    }
+                    &:first-child {
+                        margin-bottom: 25px;
+                        img {
+                            left: 18px;
+                            bottom: 13px;
+                        }
+                    }
+                }
+                .characters_count {
+                    bottom: -24px;
+                    position: absolute;
+                    right: 16px;
+                }
+            }
+            .field_captcha {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            .send_code {
+                position: absolute;
+                right: -162px;
+                bottom: 0px;
+                button {
+                    width: 155px;
+                    font-family: var(--mpfn-font-semi-bold);
+                }
+            }
+            .options {
+                width: 100%;
+                display: flex;
+                margin-top: 40px;
+                justify-content: space-between;
+                button {
+                    display: flex;
+                    justify-content: center;
+                    min-width: 160px;
+                    font-family: var(--mpfn-font-semi-bold);
+                    height: 51px;
+                    &.ce-btn-gray {
+                        color: var(--mpfn-blue-dark);
+                    }
+                    &.ce-btn-primary {
+                        margin-left: 20px;
+                    }
+                }
+                i {
+                    margin-top: 4px;
+                    margin-right: 10px;
+                    font-weight: bold;
+                }
+            }
+            .fecha__emision {
+                width: 50%;
+                padding-left: 10px;
+                .help_information__item {
+                    display: none;
+                }
+                .field_50 {
+                    width: 100%;
+                }
+            }
+        }
+        .verification__content_right {
+            width: 0;
+        }
+    }
+}
+
+@media (max-width: $tablet) {
+    .verification__container {
+        .verification__instructions {
+            h4 {
+                text-align: center;
+            }
+            p {
+                text-align: center;
+            }
+        }
+        .verification__content {
+            .verification__content_left {
+                margin: 0 auto;
+                .field {
+                    padding-right: 0;
+                    &.field__width_icon {
+                        margin-bottom: 50px;
+                        img {
+                            bottom: 66px;
+                        }
+                        .send_code {
+                            left: 100px;
+                            button {
+                                width: 240px;
+                                display: flex;
+                                justify-content: center;
+                            }
+                        }
+                    }
+                }
+                .field_captcha {
+                    display: flex;
+                    justify-content: center;
+                    position: relative;
+                    top: -74px;
+                }
+                .send_code {
+                    position: relative;
+                    right: -155px;
+                    bottom: -20px;
+                    top: 120px;
+                    button {
+                        width: 155px;
+                        font-family: var(--mpfn-font-semi-bold);
+                    }
+                }
+                .options {
+                    justify-content: space-between;
+                    button {
+                        min-width: 47.5%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media(max-width: $large-mobile) {
+    .verification__container {
+        .verification__instructions {
+            h4 {
+                text-align: center;
+                font-size: 1em;
+            }
+            p {
+                text-align: center;
+                font-size: 0.9em;
+            }
+        }
+        .verification__content {
+            .verification__content_left {
+                width: 100%;
+                .field {
+                    &.field__width_icon {
+                        .send_code {
+                            left: 0;
+                            button {
+                                width: 100%;
+                            }
+                        }
+                    }
+                }
+                .options {
+                    flex-wrap: wrap;
+                    margin-top: 30px;
+                    button {
+                        min-width: 100%;
+                        &.ce-btn-primary {
+                            margin-left: 0;
+                        }
+                        &:first-child {
+                            order: 2;
+                            margin-top: 20px;
+                        }
+                        &:last-child {
+                            order: 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

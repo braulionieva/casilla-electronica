@@ -1,0 +1,63 @@
+<app-header></app-header>
+<main class="validate_code__container">
+    <main class="sign_in__container">
+        <app-regresar
+        redirecTo="/"
+        text="Salir"
+    ></app-regresar>
+    <app-subheader title="Casilla Fiscal Electrónica"></app-subheader>
+    <div class="validate_code_content">
+        <div class="validate_code__content_left">
+            <div class="validate_code__form" [formGroup]="form">
+                <div class="validate_code__form_header">
+                    <h3>Recuperación de la cuenta</h3>
+                    <p>Para recuperar tu contraseña, necesitamos verificar que eres tú quien está intentando iniciar sesión.</p>
+                </div>
+                <div class="validate_code__form_content">
+                    <div class="field">
+                        <label for="user">Ingresa tu usuario:</label>
+                        <input
+                            maxlength="8"
+                            formControlName="usuario"
+                            pInputText
+                            placeholder="Usuario"
+                        />
+                    </div>
+                    <div class="field  field-captcha">
+                        <re-captcha #captchaRef
+                            (errored)="errored($event)"
+                            (resolved)="resolved($event)"
+                            [siteKey]="siteKey"
+                        ></re-captcha>
+                    </div>
+                    <div class="validate_code__options">
+                        <button
+                            (click)="goToLogin()"
+                            pButton
+                            class="ce-btn-gray font-bold text-center"
+                        >
+                            <i class="pi pi-arrow-left mr-2"></i>
+                            Regresar
+                        </button>
+                        <button
+                            (click)="enviar()"
+                            [disabled]="(!form.valid || !tokenOK) || validando "
+                            pButton class="ce-btn-primary font-bold text-center"
+                        >
+                            <i class="pi mr-2"></i>
+                            Continuar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="validate_code__content_right">
+            <app-afiliacion-box></app-afiliacion-box>
+        </div>
+    </div>
+</main>
+<p-toast>
+    <ng-template let-message pTemplate="message">
+        <app-custom-toast style="flex: 1 1 auto;" [message]="message"></app-custom-toast>
+    </ng-template>
+</p-toast>

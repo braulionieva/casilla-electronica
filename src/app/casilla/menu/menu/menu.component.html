@@ -1,0 +1,24 @@
+<div class="menu_user__desktop">
+    <app-menu-user
+        [alwaysExpanded]="true"
+    ></app-menu-user>
+</div>
+<div class="menu_user__mobile">
+    <app-menu-user></app-menu-user>
+</div>
+
+<app-menu-item
+    *ngFor="let it of menuGroup"
+    [active]="true"
+    [item]="it"
+    [icon]="it.icon"
+    [header]="it.name"
+    (closeSideBar)="onCloseSideBar($event)"
+></app-menu-item>
+
+<div class="sign_out">
+    <div class="sign_out__separator"></div>
+    <a class="justify-content-end" (click)="logout()" href="#">
+        <i class="fa-solid fa-arrow-right-from-bracket "></i>Cerrar sesión
+    </a>
+</div>

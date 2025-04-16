@@ -1,0 +1,60 @@
+<p-accordion class="inbox_profile">
+    <p-accordionTab [(selected)]="expanded" (click)="onClickTab()">
+        <ng-template pTemplate="header">
+            <div
+                class="inbox_profile__user"
+                [ngStyle]="{'cursor': !alwaysExpanded ? 'pointer' : 'default'}"
+            >
+                <div class="inbox_profile__user_icon">
+                    <img *ngIf="tipoPerfil === 'Persona Natural'" [src]="svgPersonaNatural" class="icon_profile" alt="Persona Natural">
+                    <img *ngIf="tipoPerfil === 'Abogado'" [src]="svgAbogado" class="icon_profile" alt="Abogado">
+                    <img *ngIf="tipoPerfil === 'Defensor Público'" [src]="svgDefensorPublico" class="icon_profile" alt="Defensor Público">
+                </div>
+                <div class="inbox_profile__user_content">
+                    <h3>{{ userData?.userName }}</h3>
+                    <p>{{ tipoPerfil }}</p>
+                </div>
+                <div class="inbox_profile__user_wrap" *ngIf="!alwaysExpanded">
+                    <i [ngClass]="{'fa-rotate-90': expanded}" class="fa-solid fa-angle-right transition-all transition-duration-300"></i>
+                </div>
+            </div>
+        </ng-template>
+        <ul
+            id="accordionSidenavPages"
+            class="item_parent__child"
+        >
+        <li>
+            <a
+                (click)="changeProfile($event, loginType.PERSONA_NATURAL)"
+                class="justify-content-end"
+                [ngClass]="{'current_profile': tipoPerfil === 'Persona Natural'}"
+            >
+                <img [src]="svgPersonaNatural" class="icon_profile" alt="Persona Natural">
+                Persona Natural
+            </a>
+        </li>
+            <li>
+                <a
+                    *ngIf="esAbogado"
+                    class="justify-content-end"
+                    (click)="changeProfile($event, loginType.ABOGADO)"
+                    [ngClass]="{'current_profile': tipoPerfil === 'Abogado'}"
+                >
+                    <img [src]="svgAbogado" class="icon_profile" alt="Abogado">
+                    Abogado
+                </a>
+            </li>
+            <li>
+                <a
+                    *ngIf="esDefensor" (click)="changeProfile($event, loginType.DEFENSOR_PUBLICO)"
+                    class="justify-content-end"
+                    [ngClass]="{'current_profile': tipoPerfil === 'Defensor Público'}"
+                >
+                    <img [src]="svgDefensorPublico" class="icon_profile" alt="Defensor Público">
+                    Defensor Público
+                </a>
+            </li>
+ 
+        </ul>
+    </p-accordionTab>
+</p-accordion>

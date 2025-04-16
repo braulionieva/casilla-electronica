@@ -1,0 +1,133 @@
+/* You can add global styles to this file, and also import other style files */
+
+@use "primeng/resources/primeng.css";
+@use '/node_modules/primeflex/primeflex.css';
+@use 'primeng/resources/themes/bootstrap4-light-blue/theme.css';
+@use "primeicons/primeicons.css";
+@use 'assets/styles/scss/tema-mpfn.scss';
+@use "assets/styles/scss/styles.scss";
+@use 'assets/scss/pages/_pages';
+@use 'assets/fontawesome/css/all.css';
+
+.w-max-1080 {
+    max-width: 1080px;
+}
+
+body {
+    font-family: Inter var, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    color: var(--mpfn-black-2);
+}
+
+.alert-modal {
+    &.p-dialog {
+        border-radius: 10px;
+
+        .p-dialog-content {
+            &:last-of-type {
+                border-radius: 10px;
+            }
+        }
+    }
+}
+
+.field {
+    .ng-invalid.ng-dirty {
+        border-color: red;
+    }
+
+    .ng-invalid.ng-touched {
+        border-color: red;
+    }
+
+    p-dropdown.ng-dirty.ng-invalid>.p-dropdown {
+        border-color: #dc3545;
+    }
+
+    p-dropdown.ng-touched.ng-invalid>.p-dropdown {
+        border-color: #dc3545;
+    }
+}
+
+
+.numero_caso {
+
+    span {
+        color: var(--mpfn-secondary) !important;
+    }
+}
+
+tr:has(td div.p-highlight) {
+    background-color: var(--mpfn-notificado) !important;
+}
+
+.input-search {
+
+    .p-inputgroup-addon {
+        background-color: var(--mpfn-notificado);
+        border-color: var(--mpfn-notificado);
+    }
+
+    .advance-search {
+        color: #000;
+        background-color: var(--mpfn-notificado);
+        border-color: var(--mpfn-notificado);
+
+        &:enabled:hover {
+            background-color: var(--mpfn-notificado);
+            color: #000;
+            border-color: var(--mpfn-notificado);
+        }
+    }
+
+    .q-tramite {
+        background-color: var(--mpfn-notificado);
+        border-color: var(--mpfn-notificado);
+
+        &:enabled:focus {
+            outline: 0 none;
+            outline-offset: 0;
+            box-shadow: none;
+            border-color: var(--mpfn-notificado);
+        }
+    }
+}
+
+.p-button:focus {
+    box-shadow: none !important
+}
+
+.label-model {
+    font-family: var(--mpfn-font-roboto-regular);
+    font-weight: 600;
+    font-size: 0.85em;
+    padding: 5px 8px;
+    border-radius: 5px;
+    margin-top: 6px;
+    display: inline-block;
+}
+
+.label-info {
+    @extend .label-model;
+    background-color: var(--background-casilla);
+    color: var(--mpfn-lightblue);
+}
+.label-danger {
+    @extend .label-model;
+    background-color: var(--mpfn-rojo-dark);
+    color: var(--mpfn-red-dark);
+}
+.label-warning {
+    @extend .label-model;
+    background-color: var(--mpfn-yellow-pastel);
+    color: var(--mpfn-secondary);
+}
+.label-success {
+    @extend .label-model;
+    background-color: var(--mpfn-verde-1);
+    color: var(--mpfn-green);
+}
+.label-leido {
+    @extend .label-model;
+    background-color: var(--mpfn-gray3);
+    color: var(--mpfn-gray5);
+}

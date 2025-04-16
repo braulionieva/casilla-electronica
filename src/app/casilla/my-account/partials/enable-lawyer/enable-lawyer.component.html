@@ -1,0 +1,187 @@
+
+<div class="enable_lawyer__container">
+    <div class="enable_lawyer__content">
+        <form class="enable_lawyer__left" [formGroup]="form">
+            <div class="enable_lawyer__header">
+                <h3>Activar perfiles para Buzón de notificaciones</h3>
+                <p>Puede activar la recepción de notificación de trámites como Persona natural y Abogado defensor.</p>
+            </div>
+            <div class="enable_lawyer__form">
+                <div class="field field_checkbox">
+                    <div class="field_checkbox__item">
+                        <p-checkbox
+                            formControlName="personaNatural"
+                            [binary]="true"
+                            inputId="pn"
+                        ></p-checkbox>
+                        &nbsp;
+                        <label
+                            class="cursor-pointer"
+                            for="pn"
+                        >Persona natural</label>
+                    </div>
+                    <div class="field_checkbox__item">
+                        <p-checkbox
+                            formControlName="abogado"
+                            [binary]="true"
+                            inputId="ab"
+                        ></p-checkbox>
+                        &nbsp;
+                        <label
+                            class="cursor-pointer"
+                            for="ab"
+                        >Abogado defensor</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="Casilla electrónica">Casilla electrónica</label>
+                    <input
+                        readonly
+                        formControlName="numeroCasilla"
+                        pInputText
+                        type="text"
+                        class="w-full"
+                    >
+                </div>
+                <div class="field">
+                    <label for="Casilla electrónica">Colegio de abogados</label>
+                    <p-dropdown
+                        *ngIf="colegios$ | async as c"
+                        emptyMessage="No se encontraron datos"
+                        styleClass="w-full"
+                        formControlName="idColegioAbogados"
+                        [options]="c"
+                        optionValue="id"
+                        optionLabel="nombre"
+                        placeholder="Seleccione"
+                    ></p-dropdown>
+                </div>
+                <div class="field">
+                    <label for="N° Colegiatura">N° Colegiatura</label>
+                    <input
+                        maxlength="5"
+                        minlength="5"
+                        (input)="soloNumeros($event, 'numeroColegiatura')"
+                        placeholder="Ingrese N° Colegiatura"
+                        formControlName="numeroColegiatura"
+                        pInputText
+                        type="text"
+                        class="w-full"
+                    >
+                </div>
+                <div class="field_option" *ngIf="!hideControls">
+                    <button
+                        (click)="update()"
+                        [disabled]="(!form.valid)"
+                        pButton
+                        class="ce-btn-primary font-bold text-center"
+                    >
+                        Guardar
+                    </button>
+                </div>
+                <div class="flex align-items-start w-full mt-3">
+                    <p-checkbox
+                        formControlName="twoFactorAuthActivated"
+                        [binary]="true"
+                        size="large"
+                        [style]="{'margin-top': '2px'}"
+                        (ngModelChange)="manage2FA($event)"
+                    />
+                    <div class="two-factor-auth">
+                        <h4>Habilitar autenticación en dos pasos (2FA) al iniciar sesión</h4>
+                        <p>Si activas esta opción, al iniciar sesión recibirás un código de verificación en tu correo electrónico registrado, el cual deberás ingresar para acceder a tu cuenta.</p>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="enable_lawyer__right">
+            <div class="profile_activation_info__container">
+                <div class="profile_activation_info__content">
+                    <img style="filter: invert(1)" src="assets/svg/envelope.svg" alt="Casilla">
+                    <h3>Activación de perfiles para Buzón de notificaciones</h3>
+                    <p>Al marcar ambos perfiles, usted autoriza a recibir en su {{ appName }}, las notificaciones de trámites relacionados a procesos penales en los que usted forma parte en calidad de sujeto procesal o abogado defensor, sin necesidad de crear una Casilla electrónica adicional.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div [formGroup]="form" class="grid mt-5">
+    <div class="col-6">
+        <div class="formgrid grid ">
+            <div class="field col-10">
+                <div class="text-xl font-bold">Activar perfiles para Buzón de notificaciones</div>
+        <span>Puede activar la recepción de notificación de trámites como Persona natural o Abogado defensor.</span>
+            </div>
+            <div class="field col-8 mt-5">
+                <div class="flex justify-content-around align-items-center flex-wrap">
+                    <div>
+                        <p-checkbox formControlName="personaNatural" [binary]="true" inputId="pn"></p-checkbox>
+                        &nbsp;<label class="cursor-pointer" for="pn">Persona natural</label>
+                    </div>
+                    <div>
+                        <p-checkbox formControlName="abogado" [binary]="true" inputId="ab"></p-checkbox>
+                        &nbsp;<label class="cursor-pointer" for="ab">Abogado defensor</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="formgrid grid">
+            <div class="field col-6">
+                <label class="font-medium" for="">Casilla electrónica</label>
+                <input readonly formControlName="numeroCasilla" pInputText type="text" class="w-full">
+            </div>
+        </div>
+        <div class="formgrid grid">
+            <div class="field col-10">
+                <label class="font-medium" for="">Colegio de abogados</label>
+                <p-dropdown *ngIf="colegios$ | async as c"
+                    emptyMessage="No se encontraron datos"
+                    styleClass="w-full"
+                    formControlName="idColegioAbogados"
+                    [options]="c"
+                    optionValue="id"
+                    optionLabel="nombre"
+                    placeholder="Seleccione documento"
+                ></p-dropdown>
+            </div>            
+        </div>
+        <div class="formgrid grid">
+            <div class="field col-6">
+                <label class="font-medium" for="">N° Colegiatura</label>
+                <input maxlength="5" (input)="soloNumeros($event, 'numeroColegiatura')" placeholder="Ingrese N° Colegiatura" formControlName="numeroColegiatura" pInputText type="text" class="w-full">
+            </div>
+        </div>
+        <div [class.hidden]="hideControls" class="formgrid grid">
+            <div class="field mt-5 col-10">
+                <div class="flex justify-content-end flex-wrap">
+                    
+
+                    <button (click)="update()" [disabled]="(!form.valid)" pButton class="ce-btn-primary font-bold text-center">
+                        <i class="pi mr-2"></i>
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-5">
+        <p-card styleClass="card-password-policy">
+            <div class="px-1">
+                <div class="mb-3"><img style="filter: invert(1)" src="assets/svg/envelope.svg" alt="Casilla"></div>
+                <p class="font-bold text-2xl mb-3">
+                    Activación de perfiles para Buzón de notificaciones
+                </p>
+                <p class="text-justify">
+                    Al marcar ambos perfiles, usted autoriza a recibir en su Casilla electrónica, las notificaciones de trámites relacionados a procesos penales en los que usted forma parte en calidad de sujeto procesal o abogado defensor, sin necesidad de crear una Casilla electrónica adicional.
+                </p>
+                
+            </div>
+        </p-card>
+    </div>
+</div> -->
+<p-toast>
+    <ng-template let-message pTemplate="message">
+        <app-custom-toast style="flex: 1 1 auto;" [message]="message"></app-custom-toast>
+    </ng-template>
+</p-toast>

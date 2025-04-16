@@ -1,0 +1,153 @@
+<div class="update_email__container">
+    <div class="update_email__content">
+        <form class="update_email__left" [formGroup]="form">
+            <div class="update_email__header">
+                <h3>Actualizar correo electrónico</h3>
+                <p>Recuerde que las alertas, así como las notificaciones en caso de contingencias con la {{ appName }} llegarán al nuevo correo electrónico consignado.</p>
+            </div>
+            <div class="update_email__form">
+                <div class="field">
+                    <label for="orreo electrónico actual">Correo electrónico actual</label>
+                    <div class="w-full">
+                        <span class="p-input-icon-left w-full">
+                            <i class="pi pi-envelope"></i>
+                            <input
+                                readonly
+                                placeholder="mi_correo@gmail.com"
+                                formControlName="email"
+                                pInputText
+                                type="text"
+                                class="w-full"
+                            >
+                        </span>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="Ingrese su nuevo correo electrónico">Ingrese su nuevo correo electrónico</label>
+                    <div class="w-full">
+                        <span
+                            class="p-input-icon-left w-full"
+                        >
+                            <i class="pi pi-envelope"></i>
+                            <input
+                                placeholder="mi_nuevo_correo@gmail.com"
+                                formControlName="newEmail"
+                                pInputText
+                                type="text"
+                                class="w-full"
+                            >
+                        </span>
+                    </div>
+                    <div class="send_code">
+                        <button
+                            (click)="sendValCode()"
+                            [disabled]="!form.get('newEmail')?.valid"
+                            pButton
+                            class="ce-btn-primary font-bold"
+                        >
+                        Enviar código
+                        </button>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="Confirmar código de verificación">Confirmar código de verificación</label>
+                    <input
+                        maxlength="6"
+                        minlength="6"
+                        (input)="soloNumeros($event, 'code')"
+                        placeholder="Ingrese el código enviado a su correo"
+                        formControlName="code"
+                        pInputText type="text"
+                        class="w-full">
+                </div>
+                <div class="field_option">
+                    <button
+                        (click)="updateEmail()"
+                        [disabled]="(!form.valid)"
+                        pButton
+                        class="ce-btn-primary font-bold text-center"
+                    >
+                        <i class="pi mr-2"></i>
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+<!-- 
+<div [formGroup]="form" class="grid mt-5">
+    <div class="col-6">
+        <div class="text-xl font-bold">Actualizar correo electrónico</div>
+        <span>Recuerde que las alertas, así como las notificaciones en caso de contingencias con la CASILLA ELECTRÓNICA
+            llegarán al nuevo correo electrónico consignado.</span>
+    </div>
+    <div class="col-12">
+        <div class="formgrid grid">
+            <div class="field col-5">
+                <label for="" class="font-medium">Correo electrónico actual</label>
+                <div class="w-full">
+                    <span class="p-input-icon-left w-full">
+                        <i class="pi pi-envelope
+                            "></i>
+                        <input readonly placeholder="ejemplo@gmail.com" formControlName="email" pInputText type="text"
+                            class="w-full">
+                    </span>
+                </div>
+
+            </div>
+        </div>
+        <div class="formgrid grid">
+            <div class="field col-5">
+                <label for="" class="font-medium">Ingrese su nuevo correo electrónico</label>
+                <div class="w-full">
+                    <span class="p-input-icon-left w-full">
+                        <i class="pi pi-envelope
+                        "></i>
+                        <input placeholder="ejemplo@gmail.com" formControlName="newEmail" pInputText type="text"
+                            class="w-full">
+                    </span>
+                </div>
+
+            </div>
+            <div class="field col-5">
+                <label for="" class="font-medium">&nbsp;</label>
+                <div>
+                    <button (click)="sendValCode()" [disabled]="!form.get('newEmail')?.valid" pButton
+                        class="ce-btn-primary font-bold" pButton>Enviar código</button>
+                </div>
+
+            </div>
+        </div>
+        <div class="formgrid grid">
+            <div class="field col-5">
+                <label for="" class="font-medium">Confirmar código de verificación</label>
+                <input maxlength="6" minlength="6" (input)="soloNumeros($event, 'code')" placeholder="Ingrese el código enviado a su correo" formControlName="code" pInputText type="text"
+                    class="w-full">
+
+            </div>
+        </div>
+        <div class="formgrid grid">
+            <div class="field mt-5 col-5">
+                <div class="flex justify-content-end flex-wrap">
+                    
+                    <button (click)="updateEmail()" [disabled]="(!form.valid)" pButton
+                        class="ce-btn-primary font-bold text-center">
+                        <i class="pi mr-2"></i>
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+<p-toast>
+    <ng-template let-message pTemplate="message">
+        <app-custom-toast style="flex: 1 1 auto;" [message]="message"></app-custom-toast>
+    </ng-template>
+</p-toast>

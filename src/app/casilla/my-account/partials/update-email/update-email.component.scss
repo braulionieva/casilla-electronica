@@ -1,0 +1,205 @@
+@use 'responsive' as *;
+
+.update_email__container {
+    width: 100%;
+    margin-top: 50px;
+    .update_email__content {
+        width: 92%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        margin: 0 auto;
+        .update_email__left {
+            width: calc(100% - 505px);
+            padding-right: 100px;
+            .update_email__header {
+                width: 100%;
+                margin-bottom: 20px;
+                h3 {
+                    font-family: var(--mpfn-font-semi-bold);
+                    margin-bottom: 10px;
+                    font-size: 1.3em;
+                }
+                p {
+                    font-family: var(--mpfn-font-roboto-regular);
+                    font-size: 1.05em;
+                }
+            }
+            .update_email__form {
+                .field {
+                    width: 100%;
+                    margin-bottom: 1.5em;
+                    position: relative;
+                    label {
+                       font-family: var(--mpfn-font-roboto-semi-bold); 
+                       width: 100%;
+                       font-size: 1em;
+                    }
+                    input {
+                        width: 100%;
+                    }
+                    p-password {
+                        width: 100% !important;
+                        display: inline-block !important;
+                    }
+                    .text_error {
+                        font-family: var(--mpfn-font-roboto-regular);
+                    }
+                    .send_code {
+                        position: absolute;
+                        right: -200px;
+                        top: 27px;
+                        button {
+                            align-items: center;
+                            display: flex;
+                            height: 51px;
+                            justify-content: center;
+                            width: 180px;
+                        }
+                    }
+                }
+                .field_option {
+                    display: flex;
+                    justify-content: flex-end;
+                    button {
+                        font-family: var(--mpfn-font-semi-bold);
+                        min-width: 180px;
+                        display: flex;
+                        justify-content: center;
+                    }
+                }
+            }
+        }
+        .update_email__right {
+            width: 505px;
+        }
+    }
+}
+
+@media (max-width: $medium-desktop) {
+    .update_email__container {
+        .update_email__content {
+            width: 95%;
+            .update_email__left {
+                width: calc(100% - 420px);
+            }
+            .update_email__right {
+                width: 420px;
+            }
+        }
+    }
+}
+
+@media (max-width: $tablet-large) {
+    .update_email__container {
+        .update_email__content {
+            width: 520px;
+            margin: 0 auto;
+            justify-content: center;
+            .update_email__left {
+                width: 100%;
+                padding-right: 0;
+                .update_email__header {
+                    h3 {
+                        text-align: center;
+                    }
+                    p {
+                        text-align: center;
+                    }
+                }
+                .update_email__form {
+                    .send_code {
+                        position: relative !important;
+                        right: 0 !important;
+                        top: 0 !important;
+                        display: flex;
+                        justify-content: center;
+                        margin-top: 1.5em;
+                        button {
+                            align-items: center;
+                            display: flex;
+                            height: 51px;
+                            justify-content: center;
+                            width: 180px;
+                        }
+                    }
+                    .field_option {
+                        justify-content: center;
+                    }
+                }
+            }
+            .update_email__right {
+                width: 100%;
+            }
+        }
+    }
+}
+
+@media (max-width: $extra-medium-mobile){
+    .update_email__container {
+        .update_email__content {
+            width: 100%;
+        }
+    }
+}
+
+@media (max-width: $tablet){
+    .update_email__container {
+        .update_email__content {
+            .update_email__left {
+                .update_email__header {
+                    h3 {
+                        font-size: 1.2em;
+                    }
+                    p {
+                        font-size: 1em;
+                    }
+                }
+                .update_email__form {
+                    .field {
+                        label {
+                           font-size: 0.9em;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $medium-mobile) {
+    .update_email__container {
+        .update_email__content {
+            .update_email__left {
+                .update_email__header {
+                    h3 {
+                        font-size: 1.1em;
+                    }
+                    p {
+                        font-size: 0.9em;
+                    }
+                }
+                .update_email__form {
+                    .field {
+                        label {
+                           font-size: 0.85em;
+                        }
+                        .send_code {
+                            button {
+                                min-width: 100%;
+                            }
+                        }
+                    }
+                    .field_option {
+                        button {
+                            min-width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .text_error {
+        font-size: 0.9em;
+    }
+}

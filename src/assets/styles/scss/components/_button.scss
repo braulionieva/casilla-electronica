@@ -1,0 +1,42 @@
+
+.p-button {
+  &.ce-btn-primary {
+    color: #ffffff;
+    background: #f39404;
+    border: 1px solid #f39404;
+    font-size: 1.0rem;
+    padding: 0.75rem 1.25rem;
+
+    &:enabled:hover {
+      background: #f06e04;
+      color: #ffffff;
+      border-color: #f06e04;
+    }
+
+    &:enabled:active {
+      background: #f06e04;
+      color: #ffffff;
+      border-color: #f06e04;
+    }
+
+    &:disabled {
+      background-color: var(--mpfn-gray3) !important;
+      border: 1px solid var(--mpfn-gray3) !important;
+      color: var(--mpfn-gray15) !important;
+    }
+  }
+
+  &.ce-btn-gray {
+    color: var(--mpfn-primary);
+    background-color: var(--mpfn-gray7);
+    border: 1px solid var(--mpfn-gray6);
+    font-size: 1.0rem;
+    padding: 0.75rem 1.25rem;
+    &:hover {
+        background: var(--mpfn-gray-hover) ;
+        color: var(--mpfn-primary) ;
+        border-color: var(--mpfn-gray2);
+    }
+
+  }
+}

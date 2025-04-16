@@ -1,0 +1,29 @@
+<div #collapsibleSection class="profile_details">
+    <ul class="text-right">
+        <!-- <li><a class="justify-content-end" href="#" *ngIf="esAbogado" (click)="changeProfile($event, loginType.ABOGADO)">Abogado <i class="pi pi-users"></i></a></li>
+        <li><a class="justify-content-end" href="#" *ngIf="esAbogado" (click)="changeProfile($event, loginType.DEFENSOR_PUBLICO)">Defensor público <i class="pi pi-users"></i></a></li>
+        <li><a class="justify-content-end" href="#" *ngIf="esAbogado" (click)="changeProfile($event, loginType.PERSONA_NATURAL)">Persona Natural <i class="fa-regular fa-user "></i></a></li> -->
+        <li><a class="justify-content-end" (click)="logout($event)" href="#">Cerrar sesión <i class="fa-solid fa-arrow-right-from-bracket "></i></a></li>
+    </ul>
+</div>
+
+<!-- <div #collapsibleSection [ngClass]="{'show': toggleProfile}" class="profile-det">
+    <div class="profile-det-box text-center">
+        <div class="block md:hidden">
+          - {{ u.nombre + ' ' + u.apePat + ' ' + u.apeMat }} -
+        </div>
+        <div class="mt-2">
+            <span>DNI: </span>{{ u.numDoc }}
+        </div>
+        <div class="mt-2">
+            <span>CASILLA: </span>{{ u.cuentaId }}
+        </div>
+    </div>
+    <ul class="text-right">
+        <li><a class="justify-content-end" href="#" *ngIf="esAbogado" (click)="changeProfile($event, '1')">Abogado <i class="pi pi-users"></i></a></li>
+        <li><a class="justify-content-end" href="#" *ngIf="esAbogado" (click)="changeProfile($event, '0')">Persona Natural <i class="fa-regular fa-user "></i></a></li>
+        <li><a [routerLink]="['/app', 'my-account', ]" href="#"><i class="fa-solid fa-user-gear"></i> Mis Datos</a></li> 
+        <li><a class="justify-content-end" (click)="logout($event)" href="#">Cerrar sesión <i class="fa-solid fa-arrow-right-from-bracket "></i></a>
+        </li>
+    </ul>
+</div> -->

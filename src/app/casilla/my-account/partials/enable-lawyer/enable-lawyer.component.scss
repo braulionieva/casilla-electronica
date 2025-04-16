@@ -1,0 +1,288 @@
+@use 'responsive' as *;
+
+.enable_lawyer__container {
+    width: 100%;
+    margin-top: 50px;
+    .enable_lawyer__content {
+        width: 92%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        margin: 0 auto;
+        .enable_lawyer__left {
+            width: calc(100% - 505px);
+            padding-right: 100px;
+            .enable_lawyer__header {
+                width: 100%;
+                margin-bottom: 30px;
+                h3 {
+                    font-family: var(--mpfn-font-semi-bold);
+                    margin-bottom: 10px;
+                    font-size: 1.3em;
+                }
+                p {
+                    font-family: var(--mpfn-font-roboto-regular);
+                    font-size: 1.05em;
+                }
+            }
+            .enable_lawyer__form {
+                .field {
+                    width: 100%;
+                    margin-bottom: 1.5em;
+                    label {
+                       font-family: var(--mpfn-font-roboto-semi-bold); 
+                       width: 100%;
+                       font-size: 1em;
+                    }
+                    input {
+                        width: 100%;
+                    }
+                    p-password {
+                        width: 100% !important;
+                        display: inline-block !important;
+                    }
+                    .text_error {
+                        font-family: var(--mpfn-font-roboto-regular);
+                    }
+                    &.field_checkbox {
+                        display: flex;
+                        align-items: center;
+                        flex-wrap: wrap;
+                        .field_checkbox__item {
+                            &:first-child {
+                                margin-right: 30px;
+                            }
+                        }
+                    }
+                }
+                .field_option {
+                    display: flex;
+                    justify-content: flex-end;
+                    button {
+                        font-family: var(--mpfn-font-semi-bold);
+                        min-width: 180px;
+                        display: flex;
+                        justify-content: center;
+                    }
+                }
+            }
+        }
+        .enable_lawyer__right {
+            width: 505px;
+            .profile_activation_info__container {
+                padding: 20px 0;
+                .profile_activation_info__content {
+                    min-width: 480px !important;
+                    width: 480px !important;
+                    background-color: var(--mpfn-gray7);
+                    min-height: 360px;
+                    padding: 40px;
+                    img {
+                        width: 30px;
+                    }
+                    h3 {
+                        color: var(--mpfn-blue-dark);
+                        font-family: var(--mpfn-font-semi-bold);
+                        font-size: 1.5em;
+                        margin-bottom: 25px;
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+:host::ng-deep {
+    .p-checkbox .p-checkbox-box.p-highlight {
+        border-color: var(--mpfn-lightblue);
+        background: var(--mpfn-lightblue);
+    }
+    .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight:hover {
+        border-color: var(--mpfn-cyan-dark);
+        background: var(--mpfn-cyan-dark);
+    }
+
+}
+
+@media (max-width: $medium-desktop) {
+    .enable_lawyer__container {
+        .enable_lawyer__content {
+            width: 95%;
+            .enable_lawyer__left {
+                width: calc(100% - 420px);
+            }
+            .enable_lawyer__right {
+                width: 420px;
+                .profile_activation_info__container {
+                    .profile_activation_info__content {
+                        width: 420px !important;
+                        min-width: auto !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $tablet-large) {
+    .enable_lawyer__container {
+        .enable_lawyer__content {
+            width: 520px;
+            margin: 0 auto;
+            justify-content: center;
+            .enable_lawyer__left {
+                width: 100%;
+                padding-right: 0;
+                .enable_lawyer__header {
+                    h3 {
+                        text-align: center;
+                    }
+                    p {
+                        text-align: center;
+                    }
+                }
+                .enable_lawyer__form {
+                    .field {
+                        &.field_checkbox {
+                            justify-content: center;
+                        }
+                    }
+                    .field_option {
+                        justify-content: center;
+                    }
+                }
+            }
+            .enable_lawyer__right {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                .profile_activation_info__container {
+                    justify-content: center;
+                    display: flex;
+                    margin-top: 40px;
+                    .profile_activation_info__content {
+                        min-width: auto !important;
+                        display: flex;
+                        flex-wrap: wrap;
+                        justify-content: center !important;
+                        h3 {
+                            text-align: center;
+                        }
+                        p {
+                            text-align: center;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $extra-medium-mobile){
+    .enable_lawyer__container {
+        .enable_lawyer__content {
+            width: 100%;
+        }
+    }
+}
+
+@media (max-width: $tablet){
+    .enable_lawyer__container {
+        .enable_lawyer__content {
+            .enable_lawyer__left {
+                .enable_lawyer__header {
+                    h3 {
+                        font-size: 1.2em;
+                    }
+                    p {
+                        font-size: 1em;
+                    }
+                }
+                .enable_lawyer__form {
+                    .field {
+                        label {
+                           font-size: 0.9em;
+                        }
+                    }
+                }
+            }
+            .enable_lawyer__right {
+                .profile_activation_info__container {
+                    width: 420px !important;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $extra-medium-mobile) {
+    .enable_lawyer__container {
+        .enable_lawyer__content {
+            .enable_lawyer__right {
+                .profile_activation_info__container {
+                    width: 100% !important;
+                    margin-top: 30px;
+                    .profile_activation_info__content {
+                        width: 100% !important;
+                        min-width: auto !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $medium-mobile) {
+    .enable_lawyer__container {
+        .enable_lawyer__content {
+            .enable_lawyer__left {
+                .enable_lawyer__header {
+                    h3 {
+                        font-size: 1.1em;
+                    }
+                    p {
+                        font-size: 0.9em;
+                    }
+                }
+                .enable_lawyer__form {
+                    .field {
+                        label {
+                           font-size: 0.85em;
+                        }
+                        &.field_checkbox {
+                            .field_checkbox__item {
+                                width: 100%;
+                                margin-top: 15px;
+                                &:first-child {
+                                    margin-top: 0;
+                                }
+                            }
+                        }
+                    }
+                    .field_option {
+                        button {
+                            min-width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .text_error {
+        font-size: 0.9em;
+    }
+}
+
+.two-factor-auth {
+    margin-left: 9px;
+    h4 {
+        font-size: 1.1em;
+        font-weight: 500;
+        margin-bottom: 10px;
+    }
+    p {
+        font-family: var(--mpfn-font-roboto-regular);
+        font-size: 1em;
+    }
+}

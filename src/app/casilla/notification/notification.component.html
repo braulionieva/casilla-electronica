@@ -1,0 +1,102 @@
+<div class="notification__container">
+    <div *ngIf="notification; else loading">
+        <div class="notification__content">
+            <div class="options">
+                <i
+                    class="fa-solid fa-arrow-left-long"
+                    (click)="historyBack($event)"
+                ></i>
+                <div *ngIf="notification.archivado === FLAG_STATUS.INACTIVO" class="archive">
+                    <span>Archivar</span>
+                    <img
+                        [src]="svgArchivar"
+                        alt="Archivar"
+                        class="archive"
+                        title="Mover a Archivados"
+                        (click)="onSingleArchive($event, notification)"
+                    >
+                </div>
+                <div *ngIf="notification.archivado === FLAG_STATUS.ACTIVO" class="unarchive">
+                    <span>Desarchivar</span>
+                    <img
+                        [src]="svgDesarchivar"
+                        alt="Archivar"
+                        class="archive"
+                        title="Desarchivar"
+                        (click)="onSingleArchive($event, notification)"
+                    >
+                </div>
+            </div>
+            <h3 class="entity__title">MINISTERIO PÚBLICO - FISCALÍA DE LA NACIÓN</h3>
+            <h4 class="system__title">{{ appName }}</h4>
+            <div class="details__title">
+                <h5 class="user__title">Señor(a):</h5>
+                <div class="notification__user">
+                    <h4>{{ removeComma(notification.nombreCompleto) }}</h4>
+                    <p>{{ capitalizedFirstWord(notification.tipoDomicilio) }} {{ numCasilla }}</p>
+                </div>
+                <div class="notification__date">
+                    Fecha de notificación: {{ notification.fechaEnvio | date: 'dd/MM/yyyy - h:mm a' }}
+                </div>
+            </div>
+            <h3 class="notification__subject">Asunto: Notificación electrónica</h3>
+            <p class="notification__description">El presente acredita el depósito de la Cédula de {{ esCitacion(notification) ? 'Citación': 'Notificación' }} {{ notification.cedula }} en su {{ notification.tipoDomicilio }}, remitida por el {{ notification.despacho }} de la {{notification.entidad }} en relación al Caso N° {{ notification.numeroCaso }}, la misma que adjunta los siguientes documentos:</p>
+            <h3 class="notification__documents_title">Documentos adjuntos a la notificación</h3>
+            <div class="notification__documents">
+                <p-table [value]="notification.adjuntos">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th scope="col" style="width: 55px;">Nro</th>
+                            <th scope="col" style="width: calc(100% - 27.5px - 40%);">Documento</th>
+                            <th scope="col" style="width: calc(100% - 27.5px - 60%);">Nombre del archivo</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template let-index="rowIndex" pTemplate="body" let-att>
+                        <tr>
+                            <td>{{ (index +1) }}</td>
+                            <td>{{ att.coDocumento }}</td>
+                            <td>
+                                <a class="link_documento" *ngIf="att.idDocumento; else texto"
+                                    (click)="descargar($event, att)"
+                                    target="_blank"
+                                >{{ att.noDocumentoOrigen }}
+                                   
+                                </a>
+                                <ng-template #texto>
+                                    <button
+                                        class="texto_archivo"
+                                        type="button"
+                                        tooltipStyleClass="toolip_archivo"
+                                        [tooltipPosition]="'top'"
+                                        tooltipEvent="focus"
+                                        pTooltip="No se puede descargar, se excedió el plazo permitido."
+                                    >
+                                        {{att.noDocumentoOrigen}}
+                                    </button>
+                                </ng-template>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+            <p class="notification__description">La notificación se considera efectuada con el depósito de la misma en su {{ appName }}, para lo cual el sistema expide una Constancia de Notificación Electrónica, con indicación expresa de la fecha y hora del depósito.</p>
+            <p class="notification__description">Para descargar la notificación y los recaudos, puede hacer clic en el link correspondiente a cada documento. Sin embargo, los recaudos solo se mantendrán accesibles hasta por seis (06) meses posteriores a su depósito en la {{ appName }}.</p>
+            <div class="notification__footer">
+                <p class="sincerely">Atentamente,</p>
+                <p class="entity">Ministerio Público - Fiscalía de la Nación</p>
+                <img [src]="logoFiscalia" alt="Logo Fiscalía">
+            </div>
+        </div>
+    </div>
+    <ng-template #loading>
+        <div class="text-center loader__container">
+            <div class="loader text-center"></div>
+            <p>Cargando...</p>
+        </div>
+    </ng-template>
+</div>
+<p-toast>
+    <ng-template let-message pTemplate="message">
+        <app-custom-toast style="flex: 1 1 auto;" [message]="message"></app-custom-toast>
+    </ng-template>
+</p-toast>

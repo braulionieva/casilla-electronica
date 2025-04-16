@@ -1,0 +1,28 @@
+@use 'responsive' as *;
+
+.go_back { 
+    text-decoration: none;
+    font-family: var(--mpfn-font-semi-bold);
+    color: var(--mpfn-primary);
+    display: flex;
+    padding: 25px 40px;
+    opacity: 1;
+    transition: 300ms opacity ease;
+    i {
+        color: var(--mpfn-primary);
+        font-weight: bold;
+        margin-top: 4px;
+        margin-right: 15px;
+    }
+    &:hover {
+        opacity: 0.7;
+    }
+}
+
+@media(max-width: $large-mobile) {
+    .go_back { 
+        padding: 30px 25px;
+        justify-content: center;
+        font-size: 0.9em;
+    }
+}

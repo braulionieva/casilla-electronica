@@ -1,0 +1,57 @@
+<app-header></app-header>
+<app-regresar
+    redirecTo="/"
+    text="Volver a la página principal"
+></app-regresar>
+<app-subheader 
+    title="Afiliación a la {{ appName }}"
+    subtitle="Para comenzar con la solicitud, primero necesitamos conocer qué tipo de persona eres."
+    [narrow]="true"
+></app-subheader>
+
+<div class="select_profile__container">
+    <div class="select_profile__content">
+        <h3>Perfil de usuario</h3>
+        <p>Seleccione la opción que mejor se adecúe a su perfil.</p>
+        <div class="profiles__container">
+            <div
+                *ngFor="let profile of profiles"
+                class="profile_item"
+                [ngClass]="{'profile_item__disabled': profile.disabled}"
+            >
+                <a 
+                    class="profile_item__content" 
+                    [routerLink]="!profile.disabled ? profile.url : null"
+                >
+                    <img alt="profie.name" [src]="profile.image" />
+                    <div class="profile_item__name">{{ profile.name }}
+                        <i class="pi pi-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <div class="w-max-1080 mx-auto">
+    <div class="font-bold mt-6">Perfil de usuario</div>
+    <p>Seleccione la opción que mejor se adecúe al perfil del interesado</p>
+    <div class="flex justify-content-start flex-wrap gap-3 opciones-perfil mt-4">
+        <a href="" [routerLink]="['/security/sign-up/persona-natural']">
+            <img alt="" style="width: 300px;height: 404px;" [src]="naturalProfileImage" />
+            <div class="font-bold flex justify-content-between align-items-center flex-wrap">Persona natural<i
+                    class="pi pi-arrow-right"></i></div>
+        </a>
+        <a  [routerLink]="['/security/sign-up/persona-juridica']" class="disabled-link" href="">
+            <img alt="" [src]="juridicProfileImage" />
+            <div class="font-bold flex justify-content-between align-items-center flex-wrap">Persona jurídica<i
+                    class="pi pi-arrow-right"></i></div>
+        </a>
+        <a href="" [routerLink]="['/security/sign-up/abogado']">
+            <img alt="" style="width: 300px;height: 404px;" [src]="layerProfileImage" />
+            <div class="font-bold flex justify-content-between align-items-center flex-wrap">Abogado<i
+                    class="pi pi-arrow-right"></i></div>
+        </a>
+    </div>
+</div> -->

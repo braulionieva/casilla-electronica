@@ -1,0 +1,22 @@
+<div
+    class="general__container"
+    [ngClass]="{
+      'general__app_container': isRouteActive('/app/'),
+      'general__not_found_container': isRouteActive('/security/no-encontrado')
+    }"
+>
+    <div class="general__content">
+        <router-outlet></router-outlet>
+    </div>
+    <ngx-spinner
+        bdColor = "rgba(0,0,0,0.4)"
+        size = "medium"
+        color = "#fff"
+        type = "ball-spin-clockwise"
+        [fullScreen] = "true"
+        style="color: white;"
+    >
+        Cargando, por favor espere.
+    </ngx-spinner>
+    <app-footer></app-footer>
+</div>

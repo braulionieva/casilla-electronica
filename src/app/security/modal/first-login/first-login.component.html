@@ -1,0 +1,95 @@
+<div [formGroup]="form" class="grid">
+    <div class="col">
+        <div class="form-login">
+            
+            <div [hidden]="activeIndex != 0" class="">
+                <div class="mt-4"><strong>Paso {{ activeIndex + 1 }} de 3</strong></div>
+                <div class="text-center mt-3 mb-5">
+                    Necesitamos Comprobar tu identidad
+                </div>
+                <div class="my-4">
+                    <p-checkbox name="email" value="COR****@GMAIL.COM"></p-checkbox>
+                    &nbsp;&nbsp;
+                    <label for="ny">COR****@GMAIL.COM</label>
+                </div>
+                <p class="mt-3">
+                    Para verificar que esta es tu dirección de correo electrónico, ingresa tu correo electrónico y haz click en “Enviar Código”
+                </p>
+                <div class="field">
+                    <input formControlName="dni" id="code" pInputText type="text" class="w-full" placeholder="Código" />
+                </div>
+
+                <div class="field text-right">
+                    <div class="mt-6">
+                        <button (click)="stepThree()" pButton class="btn-security py-3" label="Enviar Código"></button>
+                    </div>
+                </div>
+            </div>
+            <div [hidden]="activeIndex != 1" class="">
+                <div class="mt-4"><strong>Paso {{ activeIndex + 1 }} de 3</strong></div>
+                <p class="mt-3">
+                    Se envió en código al correo registrado. Por favor verifique su correo electrónico 
+                </p>
+                <div class="my-4">
+                    <div class="flex">
+                            <input pInputText type="text" class="py-3 w-full" placeholder="Usuario" />                                              
+                    </div>
+                    
+                </div>
+                
+                <div class="field">                    
+                    <div class="flex">
+                            <input pInputText type="text" class="py-3 w-full" placeholder="Código" />                                            
+                    </div>
+                </div>
+
+                <div class="field text-right">
+                    <div class="mt-6">
+                        <button (click)="stepFour()" pButton class="btn-security py-3" label="Validar Código"></button>
+                    </div>
+                </div>
+            </div>
+            <div [hidden]="activeIndex != 2" class="">
+                <div class="mt-4"><strong>Paso {{ activeIndex + 1 }} de 3</strong></div>
+                <p class="mt-3">
+                    Ingrese una nueva contraseña
+                </p>
+                <div class="my-4">
+                    <div class="flex flex-column gap-2">
+                        <p-password [toggleMask]="true"   
+                        [feedback]="false"      
+                        placeholder="Contraseña"               
+                        styleClass="w-full" class="w-full">   
+                        </p-password>  
+                        <small>8 caracteres como mínimo, alfanumérico</small>                                            
+                    </div>
+                    
+                </div>                
+                <div class="field">                    
+                    <div class="flex">
+                        <p-password [toggleMask]="true"
+                        [feedback]="false"
+                        placeholder="Repetir contraseña"
+                        styleClass="w-full" class="w-full">   
+                        </p-password>                                              
+                    </div>
+                </div>
+                <div class="field text-right">
+                    <div class="mt-6">
+                        <button (click)="stepFive()" pButton class="btn-security py-3" label="Actualizar Contraseña"></button>
+                    </div>
+                </div>
+            </div>
+            <div [hidden]="activeIndex != 3" class="">
+                <div class="text-center mb-6 mt-5">
+                    <span class="rounded-icon-only" >
+                        <i class="pi pi-check "></i>
+                    </span>
+                </div>
+                <div class="mb-4 text-center">
+                    Su contraseña ha sido actualizado con éxito
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>

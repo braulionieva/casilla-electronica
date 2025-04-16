@@ -1,0 +1,32 @@
+<div class="affiliation_box__container">
+    <div class="affiliation_box__content">
+        <img [src]="affiliationIcon" alt="Afiliación">
+        <h3>Afíliate a la {{ appName }}</h3>
+        <h6>¿No tienes usuario ni contraseña?</h6>
+        <p>Primero debes realizar el proceso de afiliación a la {{ appName }}.</p>
+        <button (click)="terminos($event)">
+            Iniciar afiliación
+            <span class="pi pi-arrow-right"></span>
+        </button>
+    </div>
+</div>
+
+<!-- <div class="affiliation-box">
+    <p-card styleClass="card-afiliacion">
+        <div class="text-justify px-5">
+            <p class="font-bold text-2xl">
+                Afíliate a la Casilla Fiscal Electrónica
+            </p>
+            <p>
+                ¿No tienes usuario ni contraseña?
+            </p>
+            <p>
+                Primero debes realizar el proceso de afiliación a la Casilla fiscal electrónica.
+            </p>
+            <a href="#" (click)="terminos($event)"  class="font-semibold border-round-md flex justify-content-between flex-wrap mx-auto border-x-1 border-solid border-200 py-3 px-4">
+                <span >Iniciar afiliación</span>
+                <span class="pi pi-arrow-right"></span>
+            </a>
+        </div>
+    </p-card>
+</div> -->

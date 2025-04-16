@@ -1,0 +1,20 @@
+@use 'responsive' as *;
+
+.footer {
+    margin-top: $footer-separation;
+    height: $footer-height;
+    color: #333;
+    font-size: 0.9em;
+    font-family: var(--mpfn-font-roboto-regular);
+    background-color: var(--mpfn-gray16);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+@media (max-width: $mobile) {
+    .footer {
+        font-size: 0.7em;
+    }
+}

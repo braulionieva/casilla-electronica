@@ -1,0 +1,115 @@
+<div class="inbox__container" [ngClass]="{'inbox__container_collapsed': sidebarCollapsed}">
+    <header class="inbox__header">
+        <div class="inbox__header_left">
+            <i
+                class="fa-solid fa-bars"
+                (click)="sidebarCollapsed=!sidebarCollapsed"
+            ></i>
+            <div class="inbox__header_logo">
+                <img
+                    class="logo__full"
+                    [src]="logoImg"
+                    alt="Casilla Fiscal Electrónica"
+                >
+                <img
+                    class="logo__reduced"
+                    [src]="logoImgReduced"
+                    alt="Casilla Fiscal Electrónica"
+                >
+            </div>
+            <h1>{{ appName }}</h1>
+        </div>
+        <div class="inbox__header_right">
+            <div id="z-det" class="inbox__user" (click)="toggleProfileDet($event)">
+                <div class="inbox__user_content">
+                    <h3>{{ userData?.userName }}</h3>
+                    <p>{{ tipoPerfil }}</p>
+                </div>
+                <div class="inbox__user_icon">
+                    <img *ngIf="tipoPerfil === 'Persona Natural'" [src]="svgPersonaNatural" class="icon_profile" alt="Persona Natural">
+                    <img *ngIf="tipoPerfil === 'Abogado'" [src]="svgAbogado" class="icon_profile" alt="Abogado">
+                    <img *ngIf="tipoPerfil === 'Defensor Público'" [src]="svgDefensorPublico" class="icon_profile" alt="Defensor Público">
+                </div>
+            </div>
+            <app-profile-det
+                *ngIf="toggleProfile"
+                (onLogout)="logout()"
+                @fadeIn @fadeOut
+                [(toggleProfile)]="toggleProfile"
+            ></app-profile-det>
+        </div>
+    </header>
+    <div *ngIf="!sidebarCollapsed" class="inbox__sidebar_background" (click)="sidebarCollapsed=!sidebarCollapsed"></div>
+    <div class="inbox__sidebar">
+        <app-menu
+            *ngIf="menu$ | async as m"
+            [menu]="m"
+            (closeSideBar)="sidebarCollapsed = true"
+        ></app-menu>
+    </div>
+    <div class="inbox__content">
+        <router-outlet></router-outlet>
+    </div>
+    <div class="inbox__footer">
+        <app-footer></app-footer>
+    </div>
+</div>
+
+
+
+
+
+
+
+<!-- 
+<div class="casilla-inbox">
+    <header class="no-print">
+        <div class="flex justify-content-between flex-wrap header">
+            <div class="flex align-items-center flex-wrap ml-2 mt-2">
+                <div class="ml-2 md:ml-4">
+                    <a (click)="openSidebar($event)" href=""><i [ngClass]="{'fa-rotate-90': !openSide}"
+                            class="fa-solid fa-tag fa-lg transition-all transition-duration-200 text-4xl btn_open__sm"></i></a>
+                </div>
+                <div class="logo___header">
+                    <img class="" style="height: 80px;" src="assets/images/logo3.png" alt="Casilla Fiscal Electrónica">
+                </div>
+                <div class="casilla-text md:ml-4 font-bold">
+                    <div>Casilla Fiscal Electrónica</div>
+                </div>
+                <div class="ml-2 md:ml-4">
+                    <a (click)="openSidebar($event)" href=""><i [ngClass]="{'fa-rotate-90': !openSide}"
+                            class="fa-solid fa-bars fa-lg transition-all transition-duration-200 btn_open__lg"></i></a>
+                </div>
+            </div>
+            <div *ngIf="userData" class="flex align-items-center justify-content-center">
+                <div class="mr-3 profile" id="det-profile-data">
+                    <div class="flex align-items-center justify-content-center">
+                        <a id="z-det" (click)="toggleProfileDet($event)" href="#">
+                            <div class="flex align-items-center flex-wrap gap-2">
+                                <div class="text-center">
+                                    <span class="hidden sm:inline text-base">{{ userData.userName }}</span>
+                                    <small class="hidden md:block text-xs">{{ tipoPerfil }}</small>
+                                </div>
+                                <i class="fa-regular fa-user fa-lg"></i>
+                            </div>
+
+                        </a>
+                    </div>
+                    <app-profile-det (onLogout)="logout()" *ngIf="toggleProfile" @fadeIn @fadeOut
+                        [(toggleProfile)]="toggleProfile"></app-profile-det>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div [ngClass]="{'open-side': openSide}" class="app-container">
+        <div class="color-sky pl-3 no-print sidebar">
+            <div *ngIf="userData" class="mt-5 mb-4 text-xl pr-3">
+                {{ userData.userName }}
+            </div>
+            <app-menu *ngIf="menu$ | async as m" [menu]="m"></app-menu>
+        </div>
+        <div class="main-content">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div> -->

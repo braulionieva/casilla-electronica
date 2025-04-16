@@ -1,0 +1,22 @@
+@use 'responsive' as *;
+
+header {
+    background-color: var(--mpfn-primary);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    .logo__container {
+        width: $width-content;
+        padding: 10px 0;
+        .logo {
+            width: 165px;
+            margin-left: -4px;
+        }
+    }
+}
+
+@media (max-width: $medium-laptop) {
+    .logo__container {
+        width: $width-content-laptop !important;
+    }
+}

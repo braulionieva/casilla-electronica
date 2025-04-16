@@ -1,0 +1,147 @@
+@use 'responsive' as *;
+
+.sign_up__container {
+    width: 100%;
+    .sign_up__content {
+        width: $width-content;
+        margin: 0 auto;
+        .sign_up__header {
+            h3 {
+                font-family: var(--mpfn-font-semi-bold);
+                color: var(--mpfn-blue-dark);
+                margin-bottom: 0;
+                font-size: 1.8em;
+            }
+            p {
+                font-family: var(--mpfn-font-semi-bold);
+                color: var(--mpfn-gray1);
+                font-size: 1.4em;
+            }
+        }
+        .sign_up__steps {
+            margin-top: 30px;
+            margin-bottom: 40px;
+            .p-steps {
+                .p-steps-item {
+                    padding-top: 1rem;
+                    padding-bottom: 1rem;
+                    &::before {
+                        margin-top: 0;
+                        z-index: -300;
+                    }
+                    &.p-highlight {
+                        background-color: #d9ecf7;
+                        .p-menuitem-link {
+                            background-color: #d9ecf7;
+                            &::after {
+                                content: " ";
+                                position: absolute;
+                                bottom: -1rem;
+                                width: 0;
+                                height: 0;
+                                left: calc(50% - 1.3rem);
+                                border-left: 20px solid transparent;
+                                border-right: 20px solid transparent;
+                                border-top: 20px solid #D9ECF7;
+                            }
+                            .p-steps-title {
+                                font-weight: bold;
+                                color: var(--mpfn-lightblue);
+                                font-size: 1rem;
+                            }
+                            .p-steps-number {
+                                border-radius: 50%;
+                                background-color: var(--mpfn-lightblue) //font-size: var(--font-size);
+                            }
+                        }
+                    }
+    
+                    .p-menuitem-link {
+                        flex-direction: row;
+                        gap: 10px;
+                        padding-left: 5px;
+                        .p-steps-title {
+                            margin-top: 0;
+                            padding-right: 10px;
+                            color: #000;
+                        }
+                        .p-steps-number {
+                            border-radius: 50%;
+                            font-size: .9rem;
+                            background-color: var(--mpfn-gray15) //font-size: var(--font-size);
+                        }
+                    }
+                }
+    
+            }
+        }
+    }
+}
+
+@media (max-width: $medium-laptop) {
+    .sign_up__container {
+        .sign_up__content {
+            width: $width-content-laptop;
+        }
+    }
+}
+
+
+@media (max-width: $tablet) {
+    .sign_up__container {
+        .sign_up__content {
+            .sign_up__header {
+                h3 {
+                    text-align: center;
+                }
+                p {
+                    text-align: center;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $large-mobile) {
+    .sign_up__container {
+        .sign_up__content {
+            .sign_up__header {
+                h3 {
+                    font-size: 1.5em;
+                }
+                p {
+                    font-size: 1.3em;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $medium-mobile) {
+    .sign_up__container {
+        .sign_up__content {
+            .sign_up__steps {
+                width: 100%;
+                .p-steps {
+                    overflow-x: auto;
+                    height: 85px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $mobile) {
+    .sign_up__container {
+        .sign_up__content {
+            .sign_up__header {
+                h3 {
+                    font-size: 1.3em;
+                }
+                p {
+                    font-size: 1.15em;
+                }
+            }
+        }
+    }
+}

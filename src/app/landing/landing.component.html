@@ -1,0 +1,33 @@
+<app-header></app-header>
+
+<div class="landing__container">
+    <div class="landing__title">
+        Bienvenido a la {{ appName }} del Ministerio Público
+    </div>
+    <div class="landing__content">
+        <div class="landing__content_left">
+            <div class="box_entry__container">
+                <div class="box_entry__image">
+                    <img [src]="ladingImage" alt="Casilla Fiscal Electrónica">
+                </div>
+                <div class="box_entry__content">
+                    <div class="box_entry__icon">
+                        <img [src]="ladingEnvelope" alt="Casilla">
+                    </div>
+                    <h3>{{ appName }}</h3>
+                    <p>Recibe y toma conocimiento rápidamente de las notificaciones y citaciones relacionadas a un caso fiscal.</p>
+                    <button
+                        pButton
+                        (click)="goToLogin()"
+                        class="ce-btn-primary"
+                    > Ingresar <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="landing__content_right">
+            <h3>¿Ya conoces la <strong>{{ appName }}</strong> del Ministerio Público?</h3>
+            <p>La {{ appName }} del {{ entityName }} es el domicilio electrónico a través del cual las personas naturales, jurídicas y abogados defensores pueden recibir y tomar conocimiento de las notificaciones y recaudos cursados en el marco de un proceso fiscal del cual forman parte.</p>
+        </div>
+    </div>
+</div>

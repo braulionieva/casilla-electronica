@@ -1,0 +1,239 @@
+@use 'responsive' as *;
+
+.confirmation__container {
+    .confirmation__content {
+        h3 {
+            font-family: var(--mpfn-font-semi-bold);
+            font-size: 1.5em;
+        }
+        .confirmation__resume {
+            background-color: var(--mpfn-white);
+            padding: 35px;
+            margin-top: 40px;
+            .confirmation__resume_header {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                img {
+                    width: 230px;
+                    margin-bottom: 20px;
+                }
+                h4 {
+                    width: 100%;
+                    margin: 0 0 10px 0;
+                    text-align: center;
+                    font-family: var(--mpfn-font-semi-bold);
+                    text-transform: uppercase;
+                    font-size: 1.5em;
+                }
+                h5 {
+                    width: 100%;
+                    margin: 0;
+                    text-align: center;
+                    font-family: var(--mpfn-font-semi-bold);
+                    font-size: 1.2em;
+                }
+            }
+            .confirmation__resume_information {
+                width: 80%;
+                margin: 45px auto 0 auto;
+                list-style: none;
+                padding-left: 0;
+                .resume_item {
+                    width: 100%;
+                    display: flex;
+                    justify-content: center;
+                    flex-wrap: wrap;
+                    margin-bottom: 8px;
+                    .resume_item__label {
+                        width: 320px;
+                        font-size: 1.05em;
+                        font-family: var(--mpfn-font-roboto-bold);
+                        text-transform: uppercase;
+                    }
+                    .resume_item__value {
+                        width: calc(100% - 320px);
+                        font-family: var(--mpfn-font-roboto-regular);
+                        font-size: 1.05em;
+                        word-break: break-word;
+                        a {
+                            &:hover {
+                                text-decoration: underline;
+                            }
+                        }
+                    }
+                    &.resume_item_usuario {
+                        .resume_item__value {
+                            color: var(--mpfn-secondary);
+                            font-family: var(--mpfn-font-roboto-bold);
+                        }
+                    }
+                }
+                .note  {
+                    margin-top: 40px;
+                    margin-left: 10px;
+                    font-family: var(--mpfn-font-roboto-regular);
+                }
+            }
+            .options {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                margin-top: 40px;
+                button {
+                    display: flex;
+                    justify-content: center;
+                    min-width: 160px;
+                    font-family: var(--mpfn-font-semi-bold);
+                    height: 51px;
+                    &.ce-btn-gray {
+                        color: var(--mpfn-blue-dark);
+                    }
+                    &.ce-btn-primary {
+                        margin-right: 20px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $medium-desktop) {
+    .confirmation__container {
+        .confirmation__content {
+            .confirmation__resume {
+                .confirmation__resume_information {
+                    width: 90%;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $tablet) {
+    .confirmation__container {
+        .confirmation__content {
+            h3 {
+                text-align: center;
+                font-size: 1.25em;
+            }
+            .confirmation__resume {
+                padding: 35px 45px;
+                .confirmation__resume_header {
+                    h4 {
+                        font-size: 1.2em;
+                    }
+                    h5 {
+                        font-size: 1.1em;
+                    }
+                }
+                .confirmation__resume_information {
+                    width: 100%;
+                    .resume_item {
+                        .resume_item__label {
+                            width: 250px;
+                            font-size: 0.9em;
+                            text-transform: uppercase;
+                        }
+                        .resume_item__value {
+                            width: calc(100% - 250px);
+                            font-size: 0.9em;
+                        }
+                    }
+                    .note  {
+                        font-size: 0.9em;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media(max-width: $large-mobile) {
+    .confirmation__container {
+        .confirmation__content {
+            .confirmation__resume {
+                .confirmation__resume_header {
+                    img {
+                        width: 190px;
+                    }
+                    h4 {
+                        font-size: 1.1em;
+                    }
+                    h5 {
+                        font-size: 1em;
+                    }
+                }
+                .confirmation__resume_information {
+                    .resume_item {
+                        .resume_item__label {
+                            width: 170px;
+                            font-size: 0.8em;
+                            text-transform: uppercase;
+                        }
+                        .resume_item__value {
+                            width: calc(100% - 180px);
+                            font-size: 0.8em;
+                        }
+                    }
+                    .note  {
+                        font-size: 0.8em;
+                    }
+                }
+                .options {
+                    flex-wrap: wrap;
+                    button {
+                        min-width: 100%;
+                        &.ce-btn-primary {
+                            margin-right: 0;
+                        }
+                        &:first-child {
+                            order: 1;
+                            margin-bottom: 20px;
+                        }
+                        &:last-child {
+                            order: 2;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media(max-width: $medium-mobile) {
+    .confirmation__container {
+        .confirmation__content {
+            .confirmation__resume {
+                padding: 30px 20px;
+                .confirmation__resume_header {
+                    h4 {
+                        font-size: 1em;
+                    }
+                    h5 {
+                        font-size: 0.9em;
+                    }
+                }
+                .confirmation__resume_information {
+                    .resume_item {
+                        display: flex;
+                        flex-wrap: wrap;
+                        margin-bottom: 20px;
+                        .resume_item__label {
+                            width: 100%;
+                            text-transform: uppercase;
+                            margin-bottom: 5px;
+                        }
+                        .resume_item__value {
+                            width: 100%;
+                        }
+                    }
+                    .note  {
+                        font-size: 0.85em;
+                    }
+                }
+            }
+        }
+    }
+}

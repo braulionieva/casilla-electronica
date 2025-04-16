@@ -1,0 +1,43 @@
+.profile_details {
+    width: 100%;
+    position: absolute;
+    background-color: var(--mpfn-white);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    overflow: hidden;
+    right: 0;
+    z-index: 100;
+    transition: 300ms all ease;
+    top: 100%;
+    ul {
+        list-style: none;
+        padding-left: 0;
+        li {
+            transition: 300ms all ease;
+            cursor: pointer;
+            &:last-child {
+                margin-bottom: 0;
+            }
+            a {
+                padding: 10px 15px;
+                text-decoration: none;
+                color: var(--mpfn-primary);
+                font-family: var(--mpfn-font-roboto-regular);
+                width: 100%;
+                height: 100%;
+                display: inline-block;
+                i {
+                    margin-left: 8px;
+                }
+            }
+            &:hover {
+                background-color: var(--mpfn-gray16);
+            }
+        }
+    }
+}
+
+.pi.pi-users {
+    font-size: 1.25em;
+}
+  

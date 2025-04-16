@@ -1,0 +1,10 @@
+<div class="my_account__container">
+    <app-update-password></app-update-password>
+    <app-update-email *ngIf="userData" [userData]="userData"></app-update-email>
+    <app-enable-lawyer *ngIf="userData && esPersonaNatural" [userData]="userData"></app-enable-lawyer>
+</div>
+<p-toast>
+    <ng-template let-message pTemplate="message">
+        <app-custom-toast style="flex: 1 1 auto;" [message]="message"></app-custom-toast>
+    </ng-template>
+</p-toast>

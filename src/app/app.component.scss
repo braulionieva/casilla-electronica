@@ -1,0 +1,47 @@
+@use 'responsive' as *;
+
+app-footer {
+    width: 100%;
+    height: $footer-height;
+}
+
+.general__container {
+    width: 100%;
+    .general__content {
+        width: 100%;
+        min-height: calc(100vh - ($footer-height + $footer-separation));
+    }
+    &.general__app_container {
+        app-footer {
+            display: none;
+        }
+        .general__content {
+            min-height: 100vh;
+            background: var(--background-casilla);
+        }
+    }
+}
+
+@media ( min-width: $max-screen ){
+    .general__container {
+        max-width: $max-screen;
+        display: flex;
+        align-items: flex-start;
+        margin: 0 auto;
+        flex-wrap: wrap;
+        border-left: 2px solid var(--mpfn-gray11);
+        border-right: 2px solid var(--mpfn-gray11);
+    }
+}
+
+:host::ng-deep {
+    .general__container {
+        &.general__not_found_container {
+            app-footer {
+                .footer {
+                    margin-top: 0 !important;
+                }
+            }
+        }
+    }
+}

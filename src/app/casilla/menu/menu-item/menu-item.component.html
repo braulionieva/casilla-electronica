@@ -1,0 +1,69 @@
+<p-accordion class="menu__item" [multiple]="true">
+    <p-accordionTab [selected]="true">
+        <ng-template pTemplate="header">
+            <div
+                class="menu__item_parent"
+                (click)="clickMe()"
+            >   
+                <div class="item_parent__content" [class.active_parent]="isRouteActive('/app/my-account')">
+                    <img [src]="icon" [alt]="header">
+                    <h3>{{ header }}</h3>
+                </div>
+                <div *ngIf="item.items.length != 0" class="item_parent__icon">
+                    <i [ngClass]="{'fa-rotate-90': show}" class="fa-solid fa-angle-right transition-all transition-duration-300"></i>
+                </div>
+            </div>
+        </ng-template>
+        <div *ngIf="item.items.length != 0">
+            <nav
+                id="accordionSidenavPages"
+                class="item_parent__child"
+            >
+                <a 
+                    *ngFor="let it of item.items"
+                    routerLinkActive="child_active"
+                    [routerLink]="[it.url]"
+                    (click)="checkIfCloseSideBar()"
+                >
+                    <div class="child_icon">
+                        <img alt="" [src]="getIcon(it.name)">
+                    </div>
+                    {{ it.name }}
+                </a> 
+            </nav>
+        </div>
+    </p-accordionTab>
+</p-accordion>
+
+<!-- <div class="menu__item">
+    <div
+        class="menu__item_parent"
+        (click)="clickMe()"
+    >   
+        <div class="item_parent__content">
+            <img [src]="icon" [alt]="header">
+            <h3>{{ header }}</h3>
+        </div>
+        <div *ngIf="item.items.length != 0" class="item_parent__icon">
+            <i [ngClass]="{'fa-rotate-90': show}" class="fa-solid fa-angle-right transition-all transition-duration-300"></i>
+        </div>
+    </div>
+    <div
+        *ngIf="item.items.length != 0"
+        [@openClose]="show"
+        #collapsibleSection
+        class="collapse"
+        id="collapsibleItem"
+    >
+        <nav
+            id="accordionSidenavPages"
+            class="item_parent__child"
+        >
+            <a 
+                *ngFor="let it of item.items"
+                routerLinkActive="child_active"
+                [routerLink]="[it.url]"
+            >{{ it.name }}</a> 
+        </nav>
+    </div>
+</div> -->

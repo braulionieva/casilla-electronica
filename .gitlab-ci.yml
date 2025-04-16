@@ -1,0 +1,75 @@
+# Variables globales
+variables:
+  IMAGE_NODE: node:16-alpine
+  DOCKER_REGISTRY: "172.16.111.116:8083"
+  REGISTRY_USER: "admin"
+  REGISTRY_PASS: "QAZwsxedc2020"
+  DOCKER_IMAGE_NAME: "cfng-casilla-electronica-bf"
+
+stages:
+  - build
+  - buildPush
+  - deploySsl
+
+############################
+# 1) COMPILACIÓN de Angular
+############################
+build:
+  image: $IMAGE_NODE
+  only:
+    refs:
+      - qa-bf-ssl
+  stage: build
+  script:
+    - echo "Compilando la aplicación Angular en modo QA..."
+    - npm install --progress=false --legacy-peer-deps
+    - npx ng build --configuration=qa
+  artifacts:
+    paths:
+      - dist/
+
+############################
+# 2) BUILD + PUSH al registro
+############################
+buildPush:
+  image: docker:stable
+  services:
+    - docker:dind
+  only:
+    refs:
+      - qa-bf-ssl
+  stage: buildPush
+  variables:
+    DOCKER_DRIVER: overlay2
+  script:
+    - echo "Construyendo la imagen Docker del frontend y subiendo al registro Nexus..."
+    - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASS" $DOCKER_REGISTRY
+    - docker build -f Dockerfile -t $DOCKER_IMAGE_NAME:latest .
+    - docker tag $DOCKER_IMAGE_NAME:latest $DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:qa
+    - docker push $DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:qa
+
+############################
+# 3) DESPLIEGUE en servidor remoto
+############################
+deploySsl:
+  only:
+    refs:
+      - qa-bf-ssl
+  stage: deploySsl
+  image: alpine:latest
+  before_script:
+    - apk update && apk add --no-cache bash openssh-client
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY_172_16_112_15" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    - chmod 600 ~/.ssh/config
+    - eval $(ssh-agent -s)
+    - ssh-add ~/.ssh/id_rsa
+  script:
+    - ssh deploy@172.16.112.15 "docker login -u $REGISTRY_USER -p $REGISTRY_PASS $DOCKER_REGISTRY"
+    - ssh deploy@172.16.112.15 "docker pull $DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:qa"
+    - ssh deploy@172.16.112.15 "docker stop $DOCKER_IMAGE_NAME-qa || true"
+    - ssh deploy@172.16.112.15 "docker rm $DOCKER_IMAGE_NAME-qa || true"
+    # Se cambia el mapeo de puertos: del puerto 2010 del host al puerto 8080 del contenedor
+    - ssh deploy@172.16.112.15 "docker run -d --name $DOCKER_IMAGE_NAME-qa --restart unless-stopped --add-host apps-cfe-piloto.mpfn.gob.pe:172.16.112.15 -p 2010:8080 $DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:qa"

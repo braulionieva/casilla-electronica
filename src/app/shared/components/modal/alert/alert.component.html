@@ -1,0 +1,14 @@
+<div class="px-5 py-4">
+    <div class="icon-{{ type }} text-center">
+        <img [src]="svgAlerta" alt="Alerta">
+    </div>
+    <div *ngIf="title" class="font-bold text-{{type}} text-lg" >{{title}}</div>
+    <p *ngIf="message" class="text-center mx-auto mt-3 max-w-md" [innerHtml]="message">
+
+    </p>
+    <div class="mt-4 w-full" [ngClass]="{'flex justify-content-between flex-wrap': confirm}">
+        <button *ngIf="confirm" pButton (click)="cancelar()" class="ce-btn-gray font-bold" pButton>{{ cancelLabel }}</button>
+        <button (click)="ok()" [ngClass]="{'block  w-full': !confirm}" pButton class="ce-btn-primary font-bold text-center"
+                        pButton>{{ confirmLabel }}</button>
+    </div>
+</div>

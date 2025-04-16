@@ -1,0 +1,13 @@
+<div class="subheader__container" [ngClass]="{'narrow_subheader__container': narrow}">
+    <div class="subheader__content">
+        <h2>{{ title }}</h2>
+        <h4 *ngIf="subtitle">{{ subtitle }}</h4>
+    </div>
+</div>
+
+<!-- <div class="border-bottom-2 py-6 surface-border">
+    <div class="w-max-1080 mx-auto">
+        <div class="text-4xl font-bold">{{ title }}</div>
+        <div *ngIf="subtitle">{{ subtitle }}</div>
+    </div>
+</div> -->

@@ -1,0 +1,24 @@
+<div class="not_found__container {{ className }}">
+    <div class="not_found__content">
+        <img [src]="svgNotFound" alt="No Encontrado">
+        <h3>Disculpe, no pudimos encontrar la página que está buscando.</h3>
+        <h6>La página no existe o está temporalmente fuera de servicio</h6>
+        <div class="not_found__options">
+            <button
+                pButton
+                (click)="regresar()"
+                class="ce-btn-gray"
+                pButton
+            >
+                Regresar
+            </button>
+            <button
+                pButton
+                (click)="irPaginaPrincipal()"
+                class="ce-btn-primary"
+                pButton
+            >Ir a la Página principal</button>
+        </div>
+        <p class="not_found__help">Puedes continuar o informar de este error 404 a <a href="mailto:>mesadeayudacfe@mpfn.gob.pe">mesadeayudacfe@mpfn.gob.pe</a></p>
+    </div>
+</div>

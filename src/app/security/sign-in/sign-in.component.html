@@ -1,0 +1,105 @@
+<app-header></app-header>
+
+<main class="sign_in__container">
+    <app-regresar redirecTo="/" text="Salir"></app-regresar>
+    <app-subheader [title]="appName"></app-subheader>
+    <div class="sign_in_content">
+        <div class="sign_in__content_left">
+            <div class="sign_in__form" [formGroup]="form" *ngIf="!es2FA">
+                <div class="sign_in__form_header">
+                    <h3>Accede a tu Casilla</h3>
+                    <p>Ingresa tu usuario y contraseña para acceder.</p>
+                </div>
+                <div class="sign_in__form_content relative">
+                    <div class="field">
+                        <label>Usuario</label>
+                        <input (focus)="showToolT()" (blur)="hideToolT()" pInputText [maxlength]="8" formControlName="usuario" placeholder="Usuario" />
+                        <div *ngIf="showTooltip" [@fadeAnimation] class="tooltip_login">
+                            <div class="tooltip_header font-bold py-2">¿Cuál es mi usuario?</div>
+                            <div class="tooltip_body">Si eres un ciudadano peruano, tu usuario es tu <strong>DNI</strong>.</div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Contraseña</label>
+                        <p-password formControlName="password" [toggleMask]="true" [feedback]="false"
+                            placeholder="Contraseña" [style]="{'width': '100%'}"
+                            [inputStyle]="{'width': '100%'}"></p-password>
+                    </div>
+                    <div class="field field-captcha">
+                        <re-captcha #captchaRef="reCaptcha" (errored)="errored($event, captchaRef)" (resolved)="resolved($event, captchaRef)"
+                            [siteKey]="siteKey"></re-captcha>
+                    </div>
+                    <button style="display: block;" (click)="login()" pButton class="w-full ce-btn-primary text-center"
+                        [disabled]="(!form.valid || !tokenOK) || authenticating ">
+                        <i [ngClass]="{'pi-spin pi-sync': authenticating}" class="pi mr-2">
+                        </i>
+                        {{ authenticating ? 'Validando credenciales...': 'Iniciar sesión' }}
+                    </button>
+                    <span class="forgot_password" (click)="openForgotPassword($event)" onKeyPress="">¿Olvidaste tu contraseña?</span>
+                </div>
+            </div>
+            <div class="sign_in__form" *ngIf="es2FA">
+                <div class="sign_in__form_header">
+                    <h3>Verificación en dos pasos</h3>
+                    <p>Hemos enviado un código de verificación de 6 dígitos a tu correo: <b>{{ correo }}</b>. Ingrésalo a continuación para completar el inicio de sesión.</p>
+                </div>
+                <div class="sign_in__form_content relative">
+                    <div class="field verification_code">
+                        <label>Código de verificación</label>
+                        <div class="flex justify-center otp_verification_code">
+                            <ng-otp-input 
+                                (onInputChange)="onOtpChange($event)"
+                                [config]="configOtp"
+                            ></ng-otp-input>
+                        </div>
+                    </div>
+                    <span 
+                        *ngIf="!isCountdownActive"
+                        class="forgot_password resend_code"
+                        (click)="onResendCode()"
+                        onKeyPress=""
+                    >¿Reenviar código?</span>
+
+                    <p 
+                        *ngIf="isCountdownActive"
+                        class="countdown"
+                    >
+                        Podrás reenviar un nuevo código en: <strong>{{ formattedCountdown }}</strong>
+                    </p>
+
+                    <div class="field flex justify-content-between options-2fa">
+                        <button 
+                            pButton
+                            icon="pi pi-arrow-left"
+                            (click)="reload()" 
+                            pRipple
+                            label="Atrás"
+                            class="ce-btn-gray px-5"
+                        ></button>
+                        <button
+                            pButton
+                            [disabled]="!isOtpInputValid || authenticating"
+                            (click)="validateCode()"
+                            pRipple class="ce-btn-primary px-5">
+                            <i 
+                                [ngClass]="{'pi pi-spin pi-sync': authenticating}"
+                                class="mr-2"></i>
+                                {{ authenticating? 'Validando código...': 'Validar código'
+                        }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sign_in__content_right">
+            <app-afiliacion-box *ngIf="!es2FA" />
+            <app-security-two-factor-auth-box *ngIf="es2FA" />
+        </div>
+    </div>
+</main>
+<p-toast>
+    <ng-template let-message pTemplate="message">
+        <app-custom-toast style="flex: 1 1 auto;" [message]="message"></app-custom-toast>
+    </ng-template>
+</p-toast>
+

@@ -1,0 +1,338 @@
+<div class="inbox_table__container">
+    <div class="inbox_table__search_container">
+        <form [formGroup]="form" class="inbox_table__search" [ngClass]="{'unarchive_search': isArchivedFolder}">
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </span>
+                <input
+                    (keydown.enter)="buscarTramite()"
+                    formControlName="tramite"
+                    class="q-tramite"
+                    type="text"
+                    pInputText
+                    placeholder="Buscar por trámite"
+                />
+            </div>
+        </form>
+        <div class="inbox_table__options">
+            <span 
+                [ngClass]="{'active_archive': selectedItems.length !== 0, 'unarchive_label': isArchivedFolder}"
+            >
+                {{ !isArchivedFolder ? 'Archivar' : 'Desarchivar' }}
+            </span>
+            <img
+                *ngIf="selectedItems.length === 0 && !isArchivedFolder"
+                [src]="svgArchivar"
+                alt="Archivar"
+                class="archive-disabled"
+            >
+            <img
+                *ngIf="selectedItems.length !== 0 && !isArchivedFolder"
+                [src]="svgArchivar"
+                alt="Archivar"
+                class="archive"
+                title="Mover a Archivados"
+                (click)="onArchive($event)"
+            >
+            <img
+                *ngIf="selectedItems.length === 0 && isArchivedFolder"
+                [src]="svgUnarchivar"
+                alt="Desarchivar"
+                class="archive-disabled"
+            >
+            <img
+                *ngIf="selectedItems.length !== 0 && isArchivedFolder"
+                [src]="svgUnarchivar"
+                alt="Desarchivar"
+                class="archive"
+                title="Desarchivar"
+                (click)="onArchive($event)"
+            >
+            <img
+                [src]="svgMore"
+                alt="Más opciones"
+                class="options"
+            >
+        </div>
+    </div>
+    <div *ngIf="notificationResponse.notifications.length === 0 && form.get('tramite')?.value === ''" class="inbox_table__empty">
+        <h4 *ngIf="empty?.emptyTitle">{{ empty?.emptyTitle }}</h4>
+        <p *ngIf="empty?.emptyDescription">{{ empty?.emptyDescription }}</p>
+    </div>
+    <div *ngIf="notificationResponse.notifications.length === 0 && form.get('tramite')?.value !== ''" class="inbox_table__empty">
+        <p>No hay notificaciones que coincidan con el criterio de búsqueda ingresado.</p>
+    </div>
+    <div class="inbox_table__content content__regular" *ngIf="notificationResponse.notifications.length > 0 && !hideTableTemp">
+        <p-table
+            [loading]="loadinInbox"
+            (onLazyLoad)="loadNotifications($event, true, 1)"
+            [(selection)]="selectedItems"
+            [paginator]="true"
+            currentPageReportTemplate="{first} de {last} de {totalRecords} registros"
+            [showCurrentPageReport]="true"
+            [value]="notificationResponse.notifications"
+            [totalRecords]="notificationResponse.total"
+            [rows]="notificationResponse.size"
+            [lazy]="true"
+            styleClass="p-datatable-sm"
+            [scrollable]="true"
+            [scrollHeight]="'calc(100vh - 278px)'"
+        >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th scope="col" style="width: 40px">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+                    <th scope="col" id="action_icons_header" style="width: 55px !important;">
+                        <div style="width: 45px;">
+                            <i (click)="onOutstanding($event)"
+                                class="fa-star mpfn_tag"
+                                [ngClass]="{'fa-solid': isAllOutstanding, 'fa-regular': !isAllOutstanding}"
+                                style="font-size: 1.2rem;"
+                            ></i>
+                            <i (click)="onImportant($event)"
+                                class="fa-bookmark mpfn_tag fa-lg"
+                                [ngClass]="{'fa-solid': isAllImportant , 'fa-regular': !isAllImportant}">
+                            </i>
+                        </div>
+                    </th>
+                    <th scope="col" style="width: 140px;">Nro. caso</th>
+                    <th scope="col" style="width: 100px;">Tipo de cédula</th>
+                    <th scope="col">Número de cédula</th>
+                    <th scope="col" *ngIf="esPersonaNatural">Etapa y acto procesal</th>
+                    <th scope="col">Trámite</th>
+                    <th scope="col" *ngIf="esAbogado">Sujeto procesal</th>
+                    <th scope="col" style="width: 100px;">Fecha de envío</th>
+                    <th scope="col" [ngStyle]="{'width': !isArchivedFolder ? '55px' : '80px'}">&nbsp;</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-notif>
+                <tr style="color: #27374D;" [ngClass]="{'font-bold': !isNotificationRead(notif.estado)}">
+                    <td>
+                        <p-tableCheckbox [value]="notif"></p-tableCheckbox>
+                    </td>
+                    <td>
+                        <div style="width: 45px;">
+                            <i
+                                (click)="onSingleOutstanding($event, notif)"
+                                class="fa-star mpfn_tag"
+                                [ngClass]="{'fa-solid': notif.destacado == FLAG_STATUS.ACTIVO , 'fa-regular': notif.destacado == FLAG_STATUS.INACTIVO}"
+                                style="font-size: 1.2rem;"
+                            ></i>
+                            <i 
+                                (click)="onSingleImportant($event, notif)"
+                                class="fa-bookmark mpfn_tag fa-lg"
+                                [ngClass]="{'fa-solid': notif.importante == FLAG_STATUS.ACTIVO, 'fa-regular': notif.importante == FLAG_STATUS.INACTIVO}">
+                            </i>
+                        </div>
+                    </td>
+                    <td>
+                        <app-numero-caso [numeroCaso]="notif.numeroCaso"></app-numero-caso>
+                        <div>
+                            <span class="label-info">{{ notif.tipoSujeto }}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            {{ getTipoCedula(notif.tipoCedula) }}
+                        </div>
+                        <div *ngIf="notif.urgencia != 'NORMAL'">
+                            <span
+                                [ngClass]="{'label-warning': notif.urgencia == 'URGENTE', 'label-danger': notif.urgencia != 'URGENTE'}"
+                            >
+                                {{ capitalizedFirstWord(notif.urgencia) }}
+                            </span>
+                        </div>
+                    </td>
+                    <td>
+                        <app-numero-caso [numeroCaso]="notif.numeroCedula"></app-numero-caso>
+                        <div>
+                            <span
+                                [ngClass]="{'label-leido': isNotificationRead(notif.estado), 'label-success': !isNotificationRead(notif.estado)}">
+                                {{ isNotificationRead(notif.estado)? 'Leído' : 'Nuevo' }}
+                            </span>
+                        </div>
+                    </td>
+                    <td *ngIf="esPersonaNatural">
+                        {{ notif.estapaProcesal }}
+                        <span class="block">
+                            {{ notif.actoProcesal }}
+                        </span>
+                    </td>
+                    <td>
+                        {{ notif.tramite }}
+                    </td>
+                    <td *ngIf="esAbogado">
+                        {{ capitalized(notif.nombreCompleto) }}
+                    </td>
+                    <td>
+                        {{ notif.fechaEnvio | date: 'dd/MM/yyyy - h:mm a' }}
+                    </td>
+                    <td class="column_detail_options text-xl">
+                        <div class="table_options">
+                            <img (click)="onSingleUnArchive($event, notif)" 
+                                class="unarchive_option"
+                                *ngIf="esArchivado(notif.archivado)"
+                                [src]="svgUnarchivar"
+                                alt="Desarchivar"
+                            >
+                            <a class="ml-2 view_notification" [routerLink]="['/app', 'my-notification', notif.idNotificacion]">
+                                <img [src]="rowRightLong" alt="Ver">
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr class="text-center">
+                    <td colspan="7" class="text-center">No se encontraron resultados</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <div class="inbox_table__content content__responsive" *ngIf="notificationResponse.notifications.length > 0">
+        <p-table
+            [loading]="loadinInbox"
+            (onLazyLoad)="loadNotifications($event, true, 2)"
+            [(selection)]="selectedItems"
+            [paginator]="true"
+            currentPageReportTemplate="{first} de {last} de {totalRecords} registros"
+            [showCurrentPageReport]="true"
+            [value]="notificationResponse.notifications"
+            [totalRecords]="notificationResponse.total"
+            [rows]="notificationResponse.size"
+            [lazy]="true"
+            styleClass="p-datatable-sm"
+            [scrollable]="true"
+            [scrollHeight]="'calc(100vh - 260px)'"
+        >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th scope="col" style="width: 35px;">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+                    <th scope="col" class="column__title">{{ inboxTitle }}</th>
+                    <th scope="col" style="width: 50px;">&nbsp;</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-notif>
+                <tr style="color: #27374D;" [ngClass]="{'font-bold': !isNotificationRead(notif.estado)}">
+                    <td [style]="{'vertical-align': 'top'}">
+                        <div class="checkbox__column">
+                            <p-tableCheckbox [value]="notif"></p-tableCheckbox>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="responsive__column">
+                            <div class="responsive__column_group">
+                                <div class="responsive__column_label">Nro. caso:</div>
+                                <div class="responsive__column_value">
+                                    <app-numero-caso [numeroCaso]="notif.numeroCaso"></app-numero-caso>
+                                    <div class="label_container">
+                                        <span class="label-info">{{ notif.tipoSujeto }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="responsive__column_group">
+                                <div class="responsive__column_label">Tipo de cédula:</div>
+                                <div class="responsive__column_value">
+                                    <div>
+                                        {{ getTipoCedula(notif.tipoCedula) }}
+                                    </div>
+                                    <div class="label_container"  *ngIf="notif.urgencia != 'NORMAL'">
+                                        <span
+                                            [ngClass]="{'label-warning': notif.urgencia == 'URGENTE', 'label-danger': notif.urgencia != 'URGENTE'}"
+                                        >
+                                            {{ capitalizedFirstWord(notif.urgencia) }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="responsive__column_group">
+                                <div class="responsive__column_label">Número de cédula:</div>
+                                <div class="responsive__column_value">
+                                    <app-numero-caso [numeroCaso]="notif.numeroCedula"></app-numero-caso>
+                                    <div class="label_container">
+                                        <span
+                                            [ngClass]="{'label-leido': isNotificationRead(notif.estado), 'label-success': !isNotificationRead(notif.estado)}">
+                                            {{ isNotificationRead(notif.estado)? 'Leído' : 'Nuevo' }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <ng-container *ngIf="esPersonaNatural">
+                                <div class="responsive__column_group">
+                                    <div class="responsive__column_label">Etapa y acto procesal:</div>
+                                    <div class="responsive__column_value">
+                                        {{ notif.estapaProcesal }}
+                                        <span class="block">
+                                            {{ notif.actoProcesal }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <div class="responsive__column_group">
+                                <div class="responsive__column_label">Trámite:</div>
+                                <div class="responsive__column_value">{{ notif.tramite }}</div>
+                            </div>
+                            <ng-container *ngIf="esAbogado">
+                                <div class="responsive__column_group">
+                                    <div class="responsive__column_label">Sujeto procesal:</div>
+                                    <div class="responsive__column_value">{{ capitalized(notif.nombreCompleto) }}</div>
+                                </div>
+                            </ng-container>
+                            <div class="responsive__column_group">
+                                <div class="responsive__column_label">Fecha de envío:</div>
+                                <div class="responsive__column_value">{{ notif.fechaEnvio | date: 'dd/MM/yyyy - h:mm a' }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td [style]="{'vertical-align': 'top'}" class="column_detail_options text-xl">
+                        <div class="table_options_responsive">
+                            <a class="ml-2 view_notification" [routerLink]="['/app', 'my-notification', notif.idNotificacion]">
+                                <img [src]="rowRightLong" alt="Ver">
+                            </a>
+                            <img 
+                                (click)="onSingleUnArchive($event, notif)" 
+                                class="unarchive_option"
+                                *ngIf="esArchivado(notif.archivado)"
+                                [src]="svgUnarchivar"
+                                alt="Desarchivar"
+                            >
+                            <div class="tag_important">
+                                <i
+                                    (click)="onSingleOutstanding($event, notif)"
+                                    class="fa-star mpfn_tag"
+                                    [ngClass]="{'fa-solid': notif.destacado == FLAG_STATUS.ACTIVO , 'fa-regular': notif.destacado == FLAG_STATUS.INACTIVO}"
+                                    style="font-size: 1.2rem;"
+                                ></i>
+                            </div>
+                            <div class="tag_outstanding">
+                                <i 
+                                    (click)="onSingleImportant($event, notif)"
+                                    class="fa-bookmark mpfn_tag fa-lg"
+                                    [ngClass]="{'fa-solid': notif.importante == FLAG_STATUS.ACTIVO, 'fa-regular': notif.importante == FLAG_STATUS.INACTIVO}"
+                                    style="font-size: 1.2rem;"
+                                >
+                                </i>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr class="text-center">
+                    <td colspan="7" class="text-center">No se encontraron resultados</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<p-toast>
+    <ng-template let-message pTemplate="message">
+        <app-custom-toast style="flex: 1 1 auto;" [message]="message"></app-custom-toast>
+    </ng-template>
+</p-toast>

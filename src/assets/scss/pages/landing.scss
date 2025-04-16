@@ -1,0 +1,39 @@
+.welcome-box {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 48px;
+    color: #161616;
+}
+
+.welcome-desc {
+    max-width: 579px;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 32px;
+    color: #525252;
+    @extend .landing-caption-color
+}
+
+.landing-caption-color {
+    color: #525252;
+}
+
+.mesa-de-partes-div,
+.casilla-div {
+    color: #161616;
+    //width: 273px;
+    background: #FFFFFF;
+    border: 1px solid #E0E0E0;
+
+    &:hover {
+        transition: all .2s;
+        background: #FEF7EB;
+        border: 1px solid #F19700;
+
+        i.fa-arrow-right {
+            color: #F19700;
+        }
+    }
+}
+
+.casilla-div {}

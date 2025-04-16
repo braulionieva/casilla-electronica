@@ -1,0 +1,194 @@
+@use 'responsive' as *;
+
+.validate_code__container {
+    width: 100%;
+    .validate_code_content {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 auto;
+        width: $width-content;
+        .validate_code__content_left {
+            width: 50%;
+            .validate_code__form {
+                padding: 80px 100px;
+                .validate_code__form_header {
+                    margin-bottom: 45px;
+                    h3 {
+                        font-family: var(--mpfn-font-semi-bold);
+                        font-size: 1.5em;
+                        margin-bottom: 8px;
+                    }
+                    p {
+                        font-family: var(--mpfn-font-roboto-regular);
+                        font-size: 1em;
+                    }
+                }
+                .validate_code__form_content {
+                    display: flex;
+                    justify-content: flex-end;
+                    flex-wrap: wrap;
+                    .field {
+                        width: 100%;
+                        margin-bottom: 1.5em;
+                        label {
+                           font-family: var(--mpfn-font-roboto-semi-bold); 
+                           width: 100%;
+                        }
+                        input {
+                            width: 100%;
+                        }
+                        p-password {
+                            width: 100% !important;
+                            display: inline-block !important;
+                        }
+                    }
+                    button {
+                        font-family: var(--mpfn-font-semi-bold);
+                    }
+                    .forgot_password {
+                        color: var(--mpfn-lightblue);
+                        cursor: pointer;
+                        display: inline-block;
+                        font-family: var(--mpfn-font-roboto-semi-bold);
+                        opacity: 1;
+                        transition: 300ms opacity ease;
+                        font-size: 1.05em;
+                        margin-top: 20px;
+                        position: relative;
+                        &:hover {
+                            opacity: 0.7;
+                        }
+                    }
+                    .validate_code__options {
+                        width: 100%;
+                        display: flex;
+                        justify-content: space-between;
+                        flex-wrap: wrap;
+                        button {
+                            width: 40%;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        }
+                    }
+                }
+            }
+        }
+        .validate_code__content_right {
+            width: 50%;
+        }
+    }
+}
+
+
+@media (max-width: $medium-laptop) {
+    .validate_code__container {
+        .validate_code_content {
+            width: $width-content-laptop;
+            .validate_code__content_left {
+                .validate_code__form {
+                    padding: 80px 60px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $tablet) {
+    .validate_code__container {
+        .validate_code_content {
+            .validate_code__content_left {
+                width: 100%;
+                .validate_code__form {
+                    width: 580px;
+                    margin: 0 auto;
+                    padding: 60px 30px 30px 30px;
+                    .validate_code__form_header {
+                        h3 {
+                            text-align: center;
+                        }
+                        p {
+                            text-align: center;
+                        }
+                    }
+                    .validate_code__form_content {
+                        justify-content: center;
+                        .field {
+                            &.field-captcha {
+                                display: flex;
+                                justify-content: center;
+                            }
+                        }
+                        .forgot_password {
+                            text-align: center;
+                        }
+                    }
+                }
+            }
+            .validate_code__content_right {
+                width: 100%;
+            }
+        }
+    }
+}
+
+@media (max-width: $large-mobile) {
+    .validate_code__container {
+        .validate_code_content {
+            .validate_code__content_left {
+                width: 100%;
+                .validate_code__form {
+                    width: 100%;
+                    padding: 70px 0 30px 0;
+                    .validate_code__form_header {
+                        margin-bottom: 45px;
+                        h3 {
+                            font-size: 1.25em;
+                        }
+                        p {
+                            font-size: 0.95em;
+                        }
+                    }
+                    .validate_code__form_content {
+                        button {
+                            font-family: var(--mpfn-font-semi-bold);
+                            font-size: 1em;
+                        }
+                        .forgot_password {
+                            font-size: 0.9em;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $medium-mobile) {
+    .validate_code__container {
+        .validate_code_content {
+            .validate_code__content_left {
+                width: 100%;
+                .validate_code__form {
+                    .validate_code__form_content {
+                        .validate_code__options {
+                            button {
+                                width: 100%;
+                                &:first-child {
+                                    order: 2;
+                                    margin-top: 20px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+:host::ng-deep app-subheader {
+    .subheader__container {
+        padding: 6px 0 50px 0;
+    }
+}

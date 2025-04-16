@@ -1,0 +1,64 @@
+@use 'responsive' as *; 
+
+.notification-header-text {
+    font-size: 1.7rem;
+    color: var(--ce-header-txt);
+    font-weight: 400;
+}
+
+.notification-block {
+    //max-width: 1500px;
+}
+
+//Tooltip lista de documentos en detalle de notificación
+// notificaciones que ya no se pueden descargar
+.p-tooltip {
+    max-width: none;
+    &.toolip_archivo {
+        .p-tooltip-arrow {
+            border-top-color: #E0E0E0;
+        }
+
+        .p-tooltip-text {
+            font-family: var(--mpfn-font-family-roboto);
+            font-size: 12px;
+            color: #333333;
+            font-weight: 400;
+            background-color: #E0E0E0;
+        }
+    }
+}
+
+@media( max-width: $medium-mobile) {
+    .p-tooltip {
+        max-width: 150px;
+    }
+}
+
+.notification-table-header {
+    .p-datatable-thead>tr>th {
+        background-color: var(--surface-d);
+    }
+
+}
+
+
+
+#print-notification {
+
+
+    @media print {
+        .p-card {
+            box-shadow: none;
+            border-radius: 0%;
+
+            .p-card-body {
+                padding: 0%;
+            }
+        }
+
+
+
+    }
+
+}

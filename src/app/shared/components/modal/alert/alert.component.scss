@@ -1,0 +1,25 @@
+.icon-success {
+    img {
+        filter: invert(69%) sepia(74%) saturate(456%) hue-rotate(75deg) brightness(85%) contrast(87%);
+        margin-bottom: 8px;
+    }
+}
+
+.text-success {
+    color: var(--mpfn-green);
+    text-align: center !important;
+    font-family: var(--mpfn-font-semi-bold);
+    font-size: 1.4em !important;
+}
+.icon-warning {
+    @extend .icon-success;
+    img {
+        filter: invert(52%) sepia(90%) saturate(1667%) hue-rotate(10deg) brightness(105%) contrast(101%);
+    }
+}
+
+
+.text-warning {
+    @extend .text-success;
+    color: var(--mpfn-secondary);
+}
